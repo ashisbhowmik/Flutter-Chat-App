@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizmaker/views/signin.dart';
+import 'package:quizmaker/views/singup.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SignIn(),
+      home: SignUpPage(),
     );
   }
 }

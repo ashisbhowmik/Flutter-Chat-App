@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:quizmaker/views/singup.dart';
 import 'package:quizmaker/widgets/widget.dart';
 
 class SignIn extends StatefulWidget {
@@ -92,10 +93,15 @@ class _SignInState extends State<SignIn> {
                     "Don't have an account? ",
                     style: TextStyle(fontSize: 15.5),
                   ),
-                  Text(
-                    "Sign Up",
-                    style: TextStyle(
-                        fontSize: 15.5, decoration: TextDecoration.underline),
+                  GestureDetector(
+                    onTap:(){
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignUpPage()));
+                    },
+                    child: Text(
+                      "Sign Up",
+                      style: TextStyle(
+                          fontSize: 15.5, decoration: TextDecoration.underline),
+                    ),
                   ),
                 ],
               ),
