@@ -1,6 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:quizmaker/services/auth.dart';
 import 'package:quizmaker/views/signin.dart';
 import 'package:quizmaker/widgets/widget.dart';
+import 'home.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -12,7 +15,33 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
   late String name, email, password;
+  bool isLoading = false;
 
+  signUp() async {
+    if (_formKey.currentState!.validate()) {
+
+      print("name is: $name, email is: $email, password is: $password");
+      setState(() {
+        isLoading = true;
+      });
+      await AuthServices().handleSignUp(email, password).then((val){
+        if(val != null){
+          setState(() {
+            isLoading = false;
+          });
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Home()));
+        }
+        else{
+          print("Error during SignUp 🥰🥰🥰🥰🥰");
+        }
+      });
+    }
+  }
+  @override
+  void initState() {
+    Firebase.initializeApp();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +51,11 @@ class _SignUpPageState extends State<SignUpPage> {
         centerTitle: true,
         title: appBar(context),
       ),
-      body: Form(
+      body:isLoading? Container(
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      ) : Form(
         key: _formKey,
         child: Container(
           // color: Colors.blue,
@@ -44,7 +77,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   labelText: "Name",
                 ),
                 onChanged: (val) {
-                  email = val;
+                  name = val;
                 },
               ),
               TextFormField(
@@ -78,24 +111,29 @@ class _SignUpPageState extends State<SignUpPage> {
                   labelText: "Password",
                 ),
                 onChanged: (val) {
-                  email = val;
+                  password = val;
                 },
               ),
               SizedBox(
                 height: 30,
               ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 26),
-                height: 45,
-                width: MediaQuery.of(context).size.width,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: Colors.blue,
-                ),
-                child: Text(
-                  "Sign Up",
-                  style: TextStyle(color: Colors.white, fontSize: 17),
+              GestureDetector(
+                onTap: (){
+                  signUp();
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 26),
+                  height: 45,
+                  width: MediaQuery.of(context).size.width,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.blue,
+                  ),
+                  child: Text(
+                    "Sign Up",
+                    style: TextStyle(color: Colors.white, fontSize: 17),
+                  ),
                 ),
               ),
               SizedBox(

@@ -1,8 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:quizmaker/services/auth.dart';
 import 'package:quizmaker/views/singup.dart';
 import 'package:quizmaker/widgets/widget.dart';
+import 'home.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -14,13 +16,31 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
   late String email, password;
+  bool isLoading = false;
 
-  signIn() {
+  signIn() async {
     if (_formKey.currentState!.validate()) {
-      // AuthServices().handleSignIn(email, password).then((val)=>{
-      //
-      // });
+      setState(() {
+        isLoading = true;
+      });
+     await AuthServices().handleSignIn(email, password).then((val){
+       if(val != null){
+         setState(() {
+           isLoading = false;
+         });
+         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Home()));
+       }
+       else{
+         print("Error during SignIn 🥰🥰🥰🥰🥰");
+       }
+     });
     }
+  }
+
+  @override
+  void initState() {
+    Firebase.initializeApp();
+    super.initState();
   }
 
   @override
@@ -33,7 +53,11 @@ class _SignInState extends State<SignIn> {
         elevation: 0,
         title: appBar(context),
       ),
-      body: Form(
+      body:isLoading ? Container(
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      )  :Form(
         key: _formKey,
         child: Container(
           // color: Colors.blue,
