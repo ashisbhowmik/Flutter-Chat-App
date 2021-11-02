@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:quizmaker/views/create_quiz.dart';
 import 'package:quizmaker/widgets/widget.dart';
+
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -16,6 +18,18 @@ class _HomeState extends State<Home> {
         elevation: 0.0,
         centerTitle: true,
         title: appBar(context),
+      ),
+      body: Container(
+        child: Column(
+          children: [],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Create_Quiz()));
+        },
+        child: Icon(Icons.insert_drive_file),
       ),
     );
   }

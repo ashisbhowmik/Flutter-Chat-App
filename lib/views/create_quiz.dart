@@ -1,56 +1,57 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:quizmaker/services/auth.dart';
-import 'package:quizmaker/views/signin.dart';
-import 'package:quizmaker/widgets/widget.dart';
-import 'home.dart';
+import 'package:quizmaker/services/database.dart';
+import 'package:random_string/random_string.dart';
+import 'addquestions.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+class Create_Quiz extends StatefulWidget {
+  const Create_Quiz({Key? key}) : super(key: key);
 
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  _Create_QuizState createState() => _Create_QuizState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _Create_QuizState extends State<Create_Quiz> {
   final _formKey = GlobalKey<FormState>();
-  late String name, email, password;
+  late String imgUrl, title, description, quizId;
   bool isLoading = false;
 
-  signUp() async {
+  addQuizData() async {
     if (_formKey.currentState!.validate()) {
-      print("name is: $name, email is: $email, password is: $password");
       setState(() {
         isLoading = true;
       });
-      await AuthServices().handleSignUp(email, password).then((val) {
-        if (val != null) {
-          setState(() {
-            isLoading = false;
-          });
+
+      quizId = randomAlpha(15);
+      Map<String, String> quizData = {
+        "quizId": quizId,
+        "imageUrl": imgUrl,
+        "title": title,
+        "description": description,
+      };
+      DatabaseServices databaseServices = new DatabaseServices();
+
+      await databaseServices.addQuizData(quizData, quizId).then((val) {
+        setState(() {
+          isLoading = false;
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Home()));
-        } else {
-          print("Error during SignUp 🥰🥰🥰🥰🥰");
-        }
+              context, MaterialPageRoute(builder: (context) => AddQuestions()));
+        });
       });
     }
-  }
-
-  @override
-  void initState() {
-    Firebase.initializeApp();
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black),
+        centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0.0,
-        centerTitle: true,
-        title: appBar(context),
+        title: Text(
+          "Create Your Quiz",
+          style: TextStyle(color: Colors.blue),
+        ),
       ),
       body: isLoading
           ? Container(
@@ -65,7 +66,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 padding: EdgeInsets.symmetric(horizontal: 26),
                 child: Column(
                   children: [
-                    Spacer(),
+                    SizedBox(
+                      height: 19,
+                    ),
                     TextFormField(
                       // ignore: prefer_const_constructors
                       validator: (val) {
@@ -77,10 +80,10 @@ class _SignUpPageState extends State<SignUpPage> {
                       },
                       // ignore: prefer_const_constructors
                       decoration: InputDecoration(
-                        labelText: "Name",
+                        labelText: "ImageUrl(Optional)",
                       ),
                       onChanged: (val) {
-                        name = val;
+                        imgUrl = val;
                       },
                     ),
                     TextFormField(
@@ -94,10 +97,10 @@ class _SignUpPageState extends State<SignUpPage> {
                       },
                       // ignore: prefer_const_constructors
                       decoration: InputDecoration(
-                        labelText: "Email",
+                        labelText: "Title",
                       ),
                       onChanged: (val) {
-                        email = val;
+                        title = val;
                       },
                     ),
                     TextFormField(
@@ -111,22 +114,23 @@ class _SignUpPageState extends State<SignUpPage> {
                       },
                       // ignore: prefer_const_constructors
                       decoration: InputDecoration(
-                        labelText: "Password",
+                        labelText: "description",
                       ),
                       onChanged: (val) {
-                        password = val;
+                        description = val;
                       },
                     ),
                     SizedBox(
                       height: 30,
                     ),
+                    Spacer(),
                     GestureDetector(
                       onTap: () {
-                        signUp();
+                        addQuizData();
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 26),
-                        height: 45,
+                        height: 50,
                         width: MediaQuery.of(context).size.width,
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
@@ -134,7 +138,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           color: Colors.blue,
                         ),
                         child: Text(
-                          "Sign Up",
+                          "Create Quiz",
                           style: TextStyle(color: Colors.white, fontSize: 17),
                         ),
                       ),
@@ -142,31 +146,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Already have an account? ",
-                          style: TextStyle(fontSize: 15.5),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SignIn()));
-                          },
-                          child: Text(
-                            "Sign In",
-                            style: TextStyle(
-                                fontSize: 15.5,
-                                decoration: TextDecoration.underline),
-                          ),
-                        ),
-                      ],
-                    ),
                     SizedBox(
-                      height: 40,
+                      height: 24,
                     ),
                   ],
                 ),

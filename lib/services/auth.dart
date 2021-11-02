@@ -1,32 +1,34 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-class AuthServices{
-
+class AuthServices {
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
-  Future handleSignIn(String email, String password) async{
-    try{
-      UserCredential authResult = await firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+  Future handleSignIn(String email, String password) async {
+    try {
+      UserCredential authResult = await firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
       final User user = authResult.user!;
       return user;
-    }catch(e){
-      print("Error during Auth_SignIn 🥰🥰🥰🥰🥰 $e");
-    }
-  }
-  Future handleSignUp(String email, String password) async{
-    try{
-      UserCredential authResult = await firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
-      final User user = authResult.user!;
-      return user;
-    }catch(e){
+    } catch (e) {
       print("Error during Auth_SignIn 🥰🥰🥰🥰🥰 $e");
     }
   }
 
-  Future handleSignOut() async{
-    try{
+  Future handleSignUp(String email, String password) async {
+    try {
+      UserCredential authResult = await firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password);
+      final User user = authResult.user!;
+      return user;
+    } catch (e) {
+      print("Error during Auth_SignIn 🥰🥰🥰🥰🥰 $e");
+    }
+  }
+
+  Future handleSignOut() async {
+    try {
       return await firebaseAuth.signOut();
-    }catch(e){
+    } catch (e) {
       print("Error during Auth_SignOut 🥰🥰🥰🥰🥰 $e");
     }
   }
