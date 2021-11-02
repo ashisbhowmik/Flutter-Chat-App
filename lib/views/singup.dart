@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quizmaker/views/signin.dart';
+import 'package:quizmaker/widgets/widget.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -12,15 +13,14 @@ class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
   late String name, email, password;
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppBar(
+      appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.0,
         centerTitle: true,
-        title: Text("Sign up", style: TextStyle(color: Colors.black),),
+        title: appBar(context),
       ),
       body: Form(
         key: _formKey,
@@ -109,8 +109,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     style: TextStyle(fontSize: 15.5),
                   ),
                   GestureDetector(
-                    onTap:(){
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignIn()));
+                    onTap: () {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => SignIn()));
                     },
                     child: Text(
                       "Sign In",
@@ -130,5 +131,3 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 }
-
-

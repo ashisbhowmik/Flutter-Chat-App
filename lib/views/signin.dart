@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:quizmaker/services/auth.dart';
 import 'package:quizmaker/views/singup.dart';
 import 'package:quizmaker/widgets/widget.dart';
 
@@ -13,6 +14,14 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
   late String email, password;
+
+  signIn() {
+    if (_formKey.currentState!.validate()) {
+      // AuthServices().handleSignIn(email, password).then((val)=>{
+      //
+      // });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,24 +72,29 @@ class _SignInState extends State<SignIn> {
                   labelText: "Password",
                 ),
                 onChanged: (val) {
-                  email = val;
+                  password = val;
                 },
               ),
               SizedBox(
                 height: 30,
               ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 26),
-                height: 45,
-                width: MediaQuery.of(context).size.width,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: Colors.blue,
-                ),
-                child: Text(
-                  "Sign In",
-                  style: TextStyle(color: Colors.white, fontSize: 17),
+              GestureDetector(
+                onTap: () {
+                  signIn();
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 26),
+                  height: 45,
+                  width: MediaQuery.of(context).size.width,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.blue,
+                  ),
+                  child: Text(
+                    "Sign In",
+                    style: TextStyle(color: Colors.white, fontSize: 17),
+                  ),
                 ),
               ),
               SizedBox(
@@ -94,8 +108,11 @@ class _SignInState extends State<SignIn> {
                     style: TextStyle(fontSize: 15.5),
                   ),
                   GestureDetector(
-                    onTap:(){
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SignUpPage()));
+                    onTap: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignUpPage()));
                     },
                     child: Text(
                       "Sign Up",
