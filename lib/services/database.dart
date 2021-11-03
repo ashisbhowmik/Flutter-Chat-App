@@ -8,7 +8,14 @@ class DatabaseServices {
         .doc(quizId)
         .set(quizData)
         .catchError((e) {
-      print("Error is ------------>>> ${e.toString()}");
+      print(" addQuizData Error is ------------>>> ${e.toString()}");
+    });
+  }
+  Future <void>addQuestionData(questionData, String quizId)async{
+    await FirebaseFirestore.instance.collection("Quizes").doc(quizId).collection("QNA").add(questionData).catchError((e){
+      print("addQuestionData Error is ------------>>> ${e.toString()}");
     });
   }
 }
+
+

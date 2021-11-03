@@ -1,13 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:quizmaker/services/database.dart';
 
 class AddQuestions extends StatefulWidget {
-  const AddQuestions({Key? key}) : super(key: key);
-
+  late String quizId;
+  AddQuestions({required this.quizId});
   @override
   _AddQuestionsState createState() => _AddQuestionsState();
 }
 
 class _AddQuestionsState extends State<AddQuestions> {
+
+
+  final _formKey = GlobalKey<FormState>();
+  late String question, o1,o2,o3,o4;
+  bool isLoading = false;
+
+  uploadQuestionData()async{
+    if(_formKey.currentState!.validate()){
+      setState(() {
+        isLoading = true;
+      });
+
+      Map<String, String>questionData = {
+          "question": question,
+          "option1" : o1,
+          "option2" : o2,
+          "option3": o3,
+          "option4": o4,
+      };
+      DatabaseServices databaseServices = new DatabaseServices();
+      databaseServices.addQuestionData(questionData, widget.quizId).then((val){
+        setState(() {
+          isLoading = false;
+        });
+      });
+    }
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,6 +51,166 @@ class _AddQuestionsState extends State<AddQuestions> {
         backgroundColor: Colors.white,
         elevation: 0.0,
       ),
+      body: isLoading
+          ? Container(
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      )
+          : Form(
+        key: _formKey,
+        child: Container(
+          // color: Colors.blue,
+          padding: EdgeInsets.symmetric(horizontal: 26),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 19,
+              ),
+              TextFormField(
+                // ignore: prefer_const_constructors
+                validator: (val) {
+                  if (val == null || val.isEmpty) {
+                    return "Please fill this field Carefully";
+                  } else {
+                    return null;
+                  }
+                },
+                // ignore: prefer_const_constructors
+                decoration: InputDecoration(
+                  labelText: "Question",
+                ),
+                onChanged: (val) {
+                  question = val;
+                },
+              ),
+              TextFormField(
+                // ignore: prefer_const_constructors
+                validator: (val) {
+                  if (val == null || val.isEmpty) {
+                    return "Please fill this field Carefully";
+                  } else {
+                    return null;
+                  }
+                },
+                // ignore: prefer_const_constructors
+                decoration: InputDecoration(
+                  labelText: "Option1 (Correct Answer)",
+                ),
+                onChanged: (val) {
+                  o1 = val;
+                },
+              ),
+              TextFormField(
+                // ignore: prefer_const_constructors
+                validator: (val) {
+                  if (val == null || val.isEmpty) {
+                    return "Please fill this field Carefully";
+                  } else {
+                    return null;
+                  }
+                },
+                // ignore: prefer_const_constructors
+                decoration: InputDecoration(
+                  labelText: "Option 2",
+                ),
+                onChanged: (val) {
+                  o2 = val;
+                },
+              ),
+
+              TextFormField(
+                // ignore: prefer_const_constructors
+                validator: (val) {
+                  if (val == null || val.isEmpty) {
+                    return "Please fill this field Carefully";
+                  } else {
+                    return null;
+                  }
+                },
+                // ignore: prefer_const_constructors
+                decoration: InputDecoration(
+                  labelText: "Option 3",
+                ),
+                onChanged: (val) {
+                  o3 = val;
+                },
+              ),TextFormField(
+                validator: (val) {
+                  if (val == null || val.isEmpty) {
+                    return "Please fill this field Carefully";
+                  } else {
+                    return null;
+                  }
+                },
+                // ignore: prefer_const_constructors
+                decoration: InputDecoration(
+                  labelText: "Option 4",
+                ),
+                onChanged: (val) {
+                  o4 = val;
+                },
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Spacer(),
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      uploadQuestionData();
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 26),
+                      height: 50,
+                      width: 111,
+                      // width: MediaQuery.of(context).size.width,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.blue,
+                      ),
+                      child: Text(
+                        "Submit",
+                        style: TextStyle(color: Colors.white, fontSize: 17),
+                      ),
+                    ),
+                  ),
+                  Text("     "),
+
+                  GestureDetector(
+                    onTap: () {
+                      uploadQuestionData();
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 26),
+                      height: 50,
+                      width: 181,
+                      // width: MediaQuery.of(context).size.width,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.blue,
+                      ),
+                      child: Text(
+                        "Add Question",
+                        style: TextStyle(color: Colors.white, fontSize: 17),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              SizedBox(
+                height: 16,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
+
