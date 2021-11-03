@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:quizmaker/helper/functions.dart';
 import 'package:quizmaker/services/database.dart';
@@ -50,7 +51,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        elevation: 0.0,
+        elevation: 0.39,
         iconTheme: IconThemeData(color:Colors.black),
         title: appBar(context),
         actions: [
@@ -93,17 +94,18 @@ class _HomeState extends State<Home> {
            title: Text("Logging You Out"),
            content: Text("Are you sure you want to LogOut From Your Account?"),
            actions: [
-             CupertinoDialogAction(
-                 child: Text("Cancel"),
-                 onPressed: () {
-                   Navigator.of(context).pop();
-                 }),
+
              CupertinoDialogAction(
                  child: Text("Yes "),
                  onPressed: () {
                    HelperFunctions.saveUserLoggedInDetatils(isLoggedIn: false);
                    Navigator.push(context, MaterialPageRoute(builder: (context)=>SignIn()));
                    setState(() {});
+                 }),
+             CupertinoDialogAction(
+                 child: Text("Cancel"),
+                 onPressed: () {
+                   Navigator.of(context).pop();
                  }),
            ],
          );
