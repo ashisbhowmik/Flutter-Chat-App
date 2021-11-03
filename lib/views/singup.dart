@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:quizmaker/helper/functions.dart';
 import 'package:quizmaker/services/auth.dart';
 import 'package:quizmaker/views/signin.dart';
 import 'package:quizmaker/widgets/widget.dart';
@@ -28,6 +29,7 @@ class _SignUpPageState extends State<SignUpPage> {
           setState(() {
             isLoading = false;
           });
+          HelperFunctions.saveUserLoggedInDetatils(isLoggedIn: true);
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => Home()));
         } else {

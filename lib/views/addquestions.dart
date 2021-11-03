@@ -29,7 +29,7 @@ class _AddQuestionsState extends State<AddQuestions> {
           "option4": o4,
       };
       DatabaseServices databaseServices = new DatabaseServices();
-      databaseServices.addQuestionData(questionData, widget.quizId).then((val){
+      databaseServices.addQuestionsData(questionData, widget.quizId).then((val){
         setState(() {
           isLoading = false;
         });
