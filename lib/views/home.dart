@@ -1,9 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:quizmaker/helper/functions.dart';
 import 'package:quizmaker/services/database.dart';
 import 'package:quizmaker/views/create_quiz.dart';
+import 'package:quizmaker/views/signin.dart';
 import 'package:quizmaker/widgets/widget.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/cupertino.dart';
+
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -46,12 +51,31 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.0,
-        centerTitle: true,
+        iconTheme: IconThemeData(color:Colors.black),
         title: appBar(context),
+        actions: [
+          Container(
+            child:Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  GestureDetector(
+                    onTap: (){
+                      showDialog();
+                    },
+                      child: Icon(CupertinoIcons.rectangle_expand_vertical)),
+                  SizedBox(width:3,),
+                ],
+              ),
+            ),
+
+          ),
+        ],
       ),
       body: Container(
         child:QuizList(),
       ),
+      drawer: Drawer(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
@@ -61,6 +85,31 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+   void showDialog() {
+     showCupertinoDialog(
+       context: context,
+       builder: (context) {
+         return CupertinoAlertDialog(
+           title: Text("Logging You Out"),
+           content: Text("Are you sure you want to LogOut From Your Account?"),
+           actions: [
+             CupertinoDialogAction(
+                 child: Text("Cancel"),
+                 onPressed: () {
+                   Navigator.of(context).pop();
+                 }),
+             CupertinoDialogAction(
+                 child: Text("Yes "),
+                 onPressed: () {
+                   HelperFunctions.saveUserLoggedInDetatils(isLoggedIn: false);
+                   Navigator.push(context, MaterialPageRoute(builder: (context)=>SignIn()));
+                   setState(() {});
+                 }),
+           ],
+         );
+       },
+     );
+   }
 }
 
 
@@ -87,13 +136,13 @@ class QuizTile extends StatelessWidget {
         //             authorName: authorName)));
       },
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 4),
+        padding: EdgeInsets.symmetric(vertical: 3),
         child: Container(
-          height: 175,
+          height: 150,
           child: Stack(
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(11),
+                borderRadius: BorderRadius.circular(10),
                 child: CachedNetworkImage(
                   imageUrl:imgUrl,
                   fit: BoxFit.cover,
@@ -101,10 +150,10 @@ class QuizTile extends StatelessWidget {
                 ),
               ),
               Container(
-                height: 175,
+                height: 150,
                 decoration: BoxDecoration(
-                  color: Colors.black87.withOpacity(0.37),
-                  borderRadius: BorderRadius.circular(11),
+                  color: Colors.black87.withOpacity(0.47),
+                  borderRadius: BorderRadius.circular(10),
                 ),
               ),
               Container(
@@ -117,7 +166,8 @@ class QuizTile extends StatelessWidget {
                       title,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w700,
                         color: Colors.white,
                       ),
                     ),
@@ -125,10 +175,10 @@ class QuizTile extends StatelessWidget {
                       height: 4,
                     ),
                     Container(
-                      margin: EdgeInsets.only(right: 15, left: 15,top: 5),
+                      margin: EdgeInsets.only(right: 15, left: 15,top: 1),
                       child: Text(
                         desc,
-                        style: TextStyle(color: Colors.white, fontSize: 14),
+                        style:GoogleFonts.lato(color: Colors.white, fontSize: 10),
                         textAlign: TextAlign.center,
                       ),
                     ),

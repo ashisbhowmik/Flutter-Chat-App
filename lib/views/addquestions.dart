@@ -174,11 +174,11 @@ class _AddQuestionsState extends State<AddQuestions> {
                       ),
                       child: Text(
                         "Submit",
-                        style: TextStyle(color: Colors.white, fontSize: 17),
+                        style: TextStyle(color: Colors.white, fontSize: 13),
                       ),
                     ),
                   ),
-                  Text("     "),
+                  Text("   "),
 
                   GestureDetector(
                     onTap: () {
@@ -196,7 +196,7 @@ class _AddQuestionsState extends State<AddQuestions> {
                       ),
                       child: Text(
                         "Add Question",
-                        style: TextStyle(color: Colors.white, fontSize: 17),
+                        style: TextStyle(color: Colors.white, fontSize: 13),
                       ),
                     ),
                   ),

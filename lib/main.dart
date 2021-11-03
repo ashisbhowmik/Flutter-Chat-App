@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quizmaker/helper/functions.dart';
 import 'package:quizmaker/views/home.dart';
 import 'package:quizmaker/views/signin.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,6 +39,8 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        // fontFamily: GoogleFonts.lato().fontFamily,
+        fontFamily: GoogleFonts.montserrat().fontFamily,
       ),
       home:isLoggedIn ? Home() : SignIn(),
     );
