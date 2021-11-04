@@ -21,7 +21,7 @@ class AuthServices {
       final User user = authResult.user!;
       return user;
     } catch (e) {
-      print("Error during Auth_SignIn 🥰🥰🥰🥰🥰 $e");
+      print("Error during Auth_SignUp 🥰🥰🥰🥰🥰 $e");
     }
   }
 

@@ -16,19 +16,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-   bool isLoggedIn = false;
+  bool isLoggedIn = false;
 
-   checkLoggedInStatus()async{
-     HelperFunctions.getUserLoggedInDetails().then((val){
-       setState(() {
-         isLoggedIn = val;
-       });
-     });
-   }
+  checkLoggedInStatus() async {
+    HelperFunctions.getUserLoggedInDetails().then((val) {
+      setState(() {
+        isLoggedIn = val;
+      });
+    });
+  }
 
   @override
   void initState() {
-     checkLoggedInStatus();
+    checkLoggedInStatus();
     super.initState();
   }
 
@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
         // fontFamily: GoogleFonts.lato().fontFamily,
         fontFamily: GoogleFonts.montserrat().fontFamily,
       ),
-      home:isLoggedIn ? Home() : SignIn(),
+      home: isLoggedIn ? Home() : SignIn(),
     );
   }
 }

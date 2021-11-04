@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:quizmaker/helper/functions.dart';
 import 'package:quizmaker/services/database.dart';
 import 'package:quizmaker/views/create_quiz.dart';
@@ -9,7 +10,6 @@ import 'package:quizmaker/views/signin.dart';
 import 'package:quizmaker/widgets/widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/cupertino.dart';
-
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -19,26 +19,32 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  QuerySnapshot? quizSnapshot;
 
-   QuerySnapshot? quizSnapshot;
-
-  Widget QuizList(){
-    return quizSnapshot != null ?   Container(
-        child: ListView.builder(
-          padding: EdgeInsets.all(9),
-          itemCount: quizSnapshot!.docChanges.length,
-          itemBuilder: (context,index){
-            return QuizTile(
-                imgUrl: quizSnapshot!.docChanges[index].doc['imageUrl'],
-                title: quizSnapshot!.docChanges[index].doc['title'],
-                desc: quizSnapshot!.docChanges[index].doc['description']);
-          },
-        ),
-    ):Container(child:Center(child: CircularProgressIndicator(),),);
+  Widget QuizList() {
+    return quizSnapshot != null
+        ? Container(
+            child: ListView.builder(
+              padding: EdgeInsets.all(9),
+              itemCount: quizSnapshot!.docChanges.length,
+              itemBuilder: (context, index) {
+                return QuizTile(
+                    imgUrl: quizSnapshot!.docChanges[index].doc['imageUrl'],
+                    title: quizSnapshot!.docChanges[index].doc['title'],
+                    desc: quizSnapshot!.docChanges[index].doc['description']);
+              },
+            ),
+          )
+        : Container(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
   }
+
   @override
   void initState() {
-    DatabaseServices().getQuizData().then((val){
+    DatabaseServices().getQuizData().then((val) {
       setState(() {
         quizSnapshot = val;
       });
@@ -48,75 +54,81 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0.39,
-        iconTheme: IconThemeData(color:Colors.black),
-        title: appBar(context),
-        actions: [
-          Container(
-            child:Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  GestureDetector(
-                    onTap: (){
-                      showDialog();
-                    },
-                      child: Icon(CupertinoIcons.rectangle_expand_vertical)),
-                  SizedBox(width:3,),
-                ],
+    return SafeArea(
+      child: Scaffold(
+        extendBody: true,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0.39,
+          systemOverlayStyle: SystemUiOverlayStyle.dark,
+          iconTheme: IconThemeData(color: Colors.black),
+          title: appBar2(context),
+          actions: [
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                        onTap: () {
+                          showDialog();
+                        },
+                        child: Icon(CupertinoIcons.rectangle_expand_vertical)),
+                    SizedBox(
+                      width: 3,
+                    ),
+                  ],
+                ),
               ),
             ),
-
-          ),
-        ],
-      ),
-      body: Container(
-        child:QuizList(),
-      ),
-      drawer: Drawer(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Create_Quiz()));
-        },
-        child: Icon(CupertinoIcons.arrow_down_doc_fill),
+          ],
+        ),
+        body: Container(
+          child: QuizList(),
+        ),
+        drawer: Drawer(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Create_Quiz()));
+          },
+          child: Icon(CupertinoIcons.arrow_down_doc_fill),
+        ),
       ),
     );
   }
-   void showDialog() {
-     showCupertinoDialog(
-       context: context,
-       builder: (context) {
-         return CupertinoAlertDialog(
-           title: Text("Logging You Out"),
-           content: Text("Are you sure you want to LogOut From Your Account?"),
-           actions: [
 
-             CupertinoDialogAction(
-                 child: Text("Yes "),
-                 onPressed: () {
-                   HelperFunctions.saveUserLoggedInDetatils(isLoggedIn: false);
-                   Navigator.push(context, MaterialPageRoute(builder: (context)=>SignIn()));
-                   setState(() {});
-                 }),
-             CupertinoDialogAction(
-                 child: Text("Cancel"),
-                 onPressed: () {
-                   Navigator.of(context).pop();
-                 }),
-           ],
-         );
-       },
-     );
-   }
+  void showDialog() {
+    showCupertinoDialog(
+      context: context,
+      builder: (context) {
+        return CupertinoAlertDialog(
+          title: Text("Logging You Out"),
+          content: Text("Are you sure you want to LogOut From Your Account?"),
+          actions: [
+            CupertinoDialogAction(
+                child: Text("Yes "),
+                onPressed: () {
+                  HelperFunctions.saveUserLoggedInDetatils(isLoggedIn: false);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SignIn()));
+                  setState(() {});
+                }),
+            CupertinoDialogAction(
+                child: Text("Cancel"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                }),
+          ],
+        );
+      },
+    );
+  }
 }
 
-
 class QuizTile extends StatelessWidget {
-  String DemoImage  = "https://images.unsplash.com/photo-1635870970553-c9c5743ae092?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMnx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60";
+  String DemoImage =
+      "https://images.unsplash.com/photo-1635870970553-c9c5743ae092?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMnx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=60";
   late String imgUrl, title, desc;
   QuizTile({
     required this.imgUrl,
@@ -138,7 +150,7 @@ class QuizTile extends StatelessWidget {
         //             authorName: authorName)));
       },
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 3),
+        padding: EdgeInsets.symmetric(vertical: 4),
         child: Container(
           height: 150,
           child: Stack(
@@ -146,7 +158,7 @@ class QuizTile extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: CachedNetworkImage(
-                  imageUrl:imgUrl,
+                  imageUrl: imgUrl,
                   fit: BoxFit.cover,
                   width: MediaQuery.of(context).size.width,
                 ),
@@ -177,14 +189,14 @@ class QuizTile extends StatelessWidget {
                       height: 4,
                     ),
                     Container(
-                      margin: EdgeInsets.only(right: 15, left: 15,top: 1),
+                      margin: EdgeInsets.only(right: 15, left: 15, top: 1),
                       child: Text(
                         desc,
-                        style:GoogleFonts.lato(color: Colors.white, fontSize: 10),
+                        style:
+                            GoogleFonts.lato(color: Colors.white, fontSize: 10),
                         textAlign: TextAlign.center,
                       ),
                     ),
-                   
                   ],
                 ),
               )
