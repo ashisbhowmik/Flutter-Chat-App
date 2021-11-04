@@ -20,30 +20,42 @@ class _OptionTileState extends State<OptionTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                border: Border.all(
-                    color: widget.description == widget.optionSelected
-                        ? widget.optionSelected == widget.correctAnswer
-                            ? Colors.green.withOpacity(0.7)
-                            : Colors.red.withOpacity(0.7)
-                        : Colors.grey)),
-            child: Text(
-              widget.option,
-              style: TextStyle(
+      child: Padding(
+        padding: const EdgeInsets.all(6.0),
+        child: Row(
+          children: [
+            Container(
+              width: 25,
+              height: 25,
+              decoration: BoxDecoration(
                   color: widget.description == widget.optionSelected
-                      ? Colors.white
-                      : Colors.grey),
+                      ? widget.optionSelected == widget.correctAnswer
+                          ? Colors.green.withOpacity(0.7)
+                          : Colors.red.withOpacity(0.7)
+                      : Colors.white,
+                  border: Border.all(
+                      color: widget.description == widget.optionSelected
+                          ? widget.optionSelected == widget.correctAnswer
+                              ? Colors.green.withOpacity(0.7)
+                              : Colors.red.withOpacity(0.7)
+                          : Colors.grey),
+                  borderRadius: BorderRadius.circular(19)),
+              child: Text(
+                widget.option,
+                style: TextStyle(
+                    color: widget.description == widget.optionSelected
+                        ? Colors.white
+                        : Colors.grey),
+              ),
+              alignment: Alignment.center,
             ),
-          ),
-          SizedBox(width: 10),
-          Container(
-            child: Text(widget.description,
-                style: TextStyle(color: Colors.grey, fontSize: 18.0)),
-          ),
-        ],
+            SizedBox(width: 15),
+            Container(
+              child: Text(widget.description,
+                  style: TextStyle(color: Colors.grey, fontSize: 15.7)),
+            ),
+          ],
+        ),
       ),
     );
   }
