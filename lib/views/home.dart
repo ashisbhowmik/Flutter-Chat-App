@@ -54,46 +54,43 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        extendBody: true,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0.39,
-          systemOverlayStyle: SystemUiOverlayStyle.dark,
-          iconTheme: IconThemeData(color: Colors.black),
-          title: appBar2(context),
-          actions: [
-            Container(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                        onTap: () {
-                          showDialog();
-                        },
-                        child: Icon(CupertinoIcons.rectangle_expand_vertical)),
-                    SizedBox(
-                      width: 3,
-                    ),
-                  ],
-                ),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0.39,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
+        iconTheme: IconThemeData(color: Colors.black),
+        title: appBar2(context),
+        actions: [
+          Container(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  GestureDetector(
+                      onTap: () {
+                        showDialog();
+                      },
+                      child: Icon(CupertinoIcons.rectangle_expand_vertical)),
+                  SizedBox(
+                    width: 3,
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-        body: Container(
-          child: QuizList(),
-        ),
-        drawer: Drawer(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Create_Quiz()));
-          },
-          child: Icon(CupertinoIcons.arrow_down_doc_fill),
-        ),
+          ),
+        ],
+      ),
+      body: Container(
+        child: QuizList(),
+      ),
+      drawer: Drawer(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Create_Quiz()));
+        },
+        child: Icon(CupertinoIcons.arrow_down_doc_fill),
       ),
     );
   }

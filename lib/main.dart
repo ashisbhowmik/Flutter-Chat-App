@@ -3,8 +3,14 @@ import 'package:quizmaker/helper/functions.dart';
 import 'package:quizmaker/views/home.dart';
 import 'package:quizmaker/views/signin.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/services.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: Colors.white,
+    ),
+  );
   runApp(const MyApp());
 }
 
