@@ -22,19 +22,19 @@ Widget appBar(BuildContext context) {
   );
 }
 
-Widget appBar2(BuildContext context){
+Widget appBar2(BuildContext context) {
   return Row(
     children: [
-      Text("Quizo",style:TextStyle(
-          color: Colors.blue,
-          fontSize: 27,
-          decoration: TextDecoration.none)),
-
-      Text("Graphy",style: TextStyle(
-          color: Colors.black,
-          decoration: TextDecoration.none,
-          fontSize: 9),),
-
+      Text("Quizo",
+          style: TextStyle(
+              color: Colors.blue,
+              fontSize: 27,
+              decoration: TextDecoration.none)),
+      Text(
+        "Graphy",
+        style: TextStyle(
+            color: Colors.black, decoration: TextDecoration.none, fontSize: 9),
+      ),
     ],
   );
 }

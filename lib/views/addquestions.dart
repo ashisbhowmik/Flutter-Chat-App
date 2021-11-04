@@ -46,8 +46,9 @@ class _AddQuestionsState extends State<AddQuestions> {
           style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,
+        iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
-        elevation: 0.0,
+        elevation: 0.39,
       ),
       body: isLoading
           ? Container(
@@ -58,7 +59,6 @@ class _AddQuestionsState extends State<AddQuestions> {
           : Form(
               key: _formKey,
               child: Container(
-                // color: Colors.blue,
                 padding: EdgeInsets.symmetric(horizontal: 26),
                 child: Column(
                   children: [
@@ -150,7 +150,7 @@ class _AddQuestionsState extends State<AddQuestions> {
                       },
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 4,
                     ),
                     Spacer(),
                     Row(
@@ -202,7 +202,7 @@ class _AddQuestionsState extends State<AddQuestions> {
                       ],
                     ),
                     SizedBox(
-                      height: 16,
+                      height: 27,
                     ),
                   ],
                 ),

@@ -23,13 +23,13 @@ class DatabaseServices {
     });
   }
 
-  getQuizData() async {
+  getCategoryQuizesDetails() async {
     await Firebase.initializeApp()
         .whenComplete(() => print("Completed initialization ☺☺☺☺☺☺☺"));
     return await FirebaseFirestore.instance.collection("Quizes").get();
   }
 
-  getQuestionsData(String quizId) async {
+  getQuizData(String quizId) async {
     return await FirebaseFirestore.instance
         .collection("Quizes")
         .doc(quizId)

@@ -49,7 +49,7 @@ class _Create_QuizState extends State<Create_Quiz> {
         iconTheme: IconThemeData(color: Colors.black),
         centerTitle: true,
         backgroundColor: Colors.white,
-        elevation: 0.0,
+        elevation: 0.39,
         title: Text(
           "Create Your Quiz",
           style: TextStyle(color: Colors.blue),
