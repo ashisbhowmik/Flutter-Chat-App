@@ -41,12 +41,12 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Quiz Maker',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         // fontFamily: GoogleFonts.lato().fontFamily,
-        fontFamily: GoogleFonts.ubuntu().fontFamily,
+        fontFamily: GoogleFonts.hind().fontFamily,
       ),
       home: isLoggedIn ? Home() : SignIn(),
     );

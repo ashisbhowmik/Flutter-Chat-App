@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quizmaker/helper/functions.dart';
 import 'package:quizmaker/models/question_model.dart';
 import 'package:quizmaker/services/database.dart';
@@ -238,6 +239,7 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
                 width: 11,
               ),
               Container(
+                margin: EdgeInsets.only(top: 3),
                 width: MediaQuery.of(context).size.width / 1.39,
                 child: Text(
                   "${widget.questionModel.question} ?",
@@ -247,25 +249,28 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
             ],
           ),
           SizedBox(
-            height: 12,
+            height: 6,
           ),
           GestureDetector(
             onTap: () {
               if (widget.questionModel.answered == false) {
                 if (widget.questionModel.option1 ==
                     widget.questionModel.correctOption) {
-                  optionSelected = widget.questionModel.option1;
-                  widget.questionModel.answered = true;
-                  _correct = _correct + 1;
-                  _notAttempted = _notAttempted - 1;
-                  print(
-                      "correct answer is ------------> ${widget.questionModel.correctOption}");
-                  setState(() {});
+                  setState(() {
+                    optionSelected = widget.questionModel.option1;
+                    widget.questionModel.answered = true;
+                    print(
+                        "correct answer is ------------> ${widget.questionModel.correctOption}");
+                    _correct = _correct + 1;
+                    _notAttempted = _notAttempted - 1;
+                  });
                 } else {
-                  optionSelected = widget.questionModel.option1;
-                  widget.questionModel.answered = true;
-                  _incorrect = _incorrect + 1;
-                  setState(() {});
+                  setState(() {
+                    optionSelected = widget.questionModel.option1;
+                    widget.questionModel.answered = true;
+                    _incorrect = _incorrect + 1;
+                    _notAttempted = _notAttempted - 1;
+                  });
                 }
               }
             },
@@ -277,25 +282,29 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 6,
           ),
           GestureDetector(
             onTap: () {
               if (widget.questionModel.answered == false) {
                 if (widget.questionModel.option1 ==
                     widget.questionModel.correctOption) {
-                  optionSelected = widget.questionModel.option2;
-                  widget.questionModel.answered = true;
-                  print(
-                      "correct answer is ------------> ${widget.questionModel.correctOption}");
-                  _correct = _correct + 1;
-                  _notAttempted = _notAttempted - 1;
-                  setState(() {});
+                  setState(() {
+                    optionSelected = widget.questionModel.option2;
+                    widget.questionModel.answered = true;
+                    print(
+                        "correct answer is ------------> ${widget.questionModel.correctOption}");
+
+                    _correct = _correct + 1;
+                    _notAttempted = _notAttempted - 1;
+                  });
                 } else {
-                  optionSelected = widget.questionModel.option2;
-                  widget.questionModel.answered = true;
-                  _incorrect = _incorrect + 1;
-                  setState(() {});
+                  setState(() {
+                    optionSelected = widget.questionModel.option2;
+                    widget.questionModel.answered = true;
+                    _incorrect = _incorrect + 1;
+                    _notAttempted = _notAttempted - 1;
+                  });
                 }
               }
             },
@@ -307,25 +316,29 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 6,
           ),
           GestureDetector(
             onTap: () {
               if (widget.questionModel.answered == false) {
                 if (widget.questionModel.option1 ==
                     widget.questionModel.correctOption) {
-                  optionSelected = widget.questionModel.option3;
-                  widget.questionModel.answered = true;
-                  print(
-                      "correct answer is ------------> ${widget.questionModel.correctOption}");
-                  _correct = _correct + 1;
-                  _notAttempted = _notAttempted - 1;
-                  setState(() {});
+                  setState(() {
+                    optionSelected = widget.questionModel.option3;
+                    widget.questionModel.answered = true;
+                    print(
+                        "correct answer is ------------> ${widget.questionModel.correctOption}");
+
+                    _correct = _correct + 1;
+                    _notAttempted = _notAttempted - 1;
+                  });
                 } else {
-                  optionSelected = widget.questionModel.option3;
-                  widget.questionModel.answered = true;
-                  _incorrect = _incorrect + 1;
-                  setState(() {});
+                  setState(() {
+                    optionSelected = widget.questionModel.option3;
+                    widget.questionModel.answered = true;
+                    _incorrect = _incorrect + 1;
+                    _notAttempted = _notAttempted - 1;
+                  });
                 }
               }
             },
@@ -337,25 +350,29 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 6,
           ),
           GestureDetector(
             onTap: () {
               if (widget.questionModel.answered == false) {
                 if (widget.questionModel.option1 ==
                     widget.questionModel.correctOption) {
-                  optionSelected = widget.questionModel.option4;
-                  widget.questionModel.answered = true;
-                  print(
-                      "correct answer is ------------> ${widget.questionModel.correctOption}");
-                  _correct = _correct + 1;
-                  _notAttempted = _notAttempted - 1;
-                  setState(() {});
+                  setState(() {
+                    optionSelected = widget.questionModel.option4;
+                    widget.questionModel.answered = true;
+                    print(
+                        "correct answer is ------------> ${widget.questionModel.correctOption}");
+
+                    _correct = _correct + 1;
+                    _notAttempted = _notAttempted - 1;
+                  });
                 } else {
-                  optionSelected = widget.questionModel.option4;
-                  widget.questionModel.answered = true;
-                  _incorrect = _incorrect + 1;
-                  setState(() {});
+                  setState(() {
+                    optionSelected = widget.questionModel.option4;
+                    widget.questionModel.answered = true;
+                    _incorrect = _incorrect + 1;
+                    _notAttempted = _notAttempted - 1;
+                  });
                 }
               }
             },

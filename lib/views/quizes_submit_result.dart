@@ -6,7 +6,10 @@ class QuizSubmitResult extends StatefulWidget {
   late int correct, incorrect, total;
   late String quizId;
   QuizSubmitResult(
-      {required this.correct, required this.incorrect, required this.total, required this.quizId});
+      {required this.correct,
+      required this.incorrect,
+      required this.total,
+      required this.quizId});
 
   @override
   _QuizSubmitResultState createState() => _QuizSubmitResultState();
@@ -30,15 +33,18 @@ class _QuizSubmitResultState extends State<QuizSubmitResult> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "You Scored ${widget.correct} out of ${widget.total} ",
+                    "You answered ${widget.correct}  question correct and ${widget.incorrect} answer incorrect ",
                     textAlign: TextAlign.center,
                   ),
                 ),
                 SizedBox(height: 18),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => PlayQuiz(quizId: widget.quizId)));
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                PlayQuiz(quizId: widget.quizId)));
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 26),

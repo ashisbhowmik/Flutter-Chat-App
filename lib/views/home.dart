@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:quizmaker/helper/functions.dart';
+import 'package:quizmaker/services/auth.dart';
 import 'package:quizmaker/services/database.dart';
 import 'package:quizmaker/views/create_quiz.dart';
 import 'package:quizmaker/views/play_quiz.dart';
@@ -21,6 +21,13 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   QuerySnapshot? quizSnapshot;
+  Future refreshFunction() async {
+    setState(() {
+      DatabaseServices().getCategoryQuizesDetails().then((val) {
+        quizSnapshot = val;
+      });
+    });
+  }
 
   Widget QuizList() {
     return quizSnapshot != null
@@ -91,8 +98,11 @@ class _HomeState extends State<Home> {
               ))
         ],
       ),
-      body: Container(
-        child: QuizList(),
+      body: RefreshIndicator(
+        onRefresh: refreshFunction,
+        child: Container(
+          child: QuizList(),
+        ),
       ),
       drawer: Drawer(),
       floatingActionButton: FloatingActionButton(
