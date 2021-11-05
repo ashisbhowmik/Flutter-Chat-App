@@ -11,7 +11,7 @@ import 'package:quizmaker/widgets/widget.dart';
 
 class PlayQuiz extends StatefulWidget {
   late String quizId, title;
-  PlayQuiz({required this.quizId, required this.title});
+  PlayQuiz({required this.quizId, this.title = ""});
 
   @override
   _PlayQuizState createState() => _PlayQuizState();
@@ -51,7 +51,7 @@ class _PlayQuizState extends State<PlayQuiz> {
         centerTitle: true,
         elevation: 0.4,
         title: Text(
-          widget.title,
+          widget.title == "" ? "Questions" : widget.title,
           style: TextStyle(color: Colors.blue),
         ),
         actions: [
@@ -61,47 +61,96 @@ class _PlayQuizState extends State<PlayQuiz> {
                 onTap: () {
                   showDialog();
                 },
-                child: Icon(CupertinoIcons.add)),
+                child: questionsSnapshot == null
+                    ? Container()
+                    : questionsSnapshot!.docChanges.length == 0
+                        ? (Container())
+                        : Icon(CupertinoIcons.add)),
           )
         ],
       ),
-      body: Container(
-        child: Column(
-          children: [
-            questionsSnapshot == null
-                ? Container(
-                    margin: EdgeInsets.only(top: 300),
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  )
-                : ListView.builder(
-                    physics: ClampingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: questionsSnapshot!.docChanges.length,
-                    itemBuilder: (context, index) {
-                      return QuizPlayTile(
-                        questionModel: getQuestionModelFromDataSnapshot(
-                            questionsSnapshot!.docChanges[index]),
-                        index: index,
-                      );
-                    },
-                  )
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: [
+              questionsSnapshot == null
+                  ? Container(
+                      margin: EdgeInsets.only(top: 300),
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : questionsSnapshot!.docChanges.length == 0
+                      ? Container(
+                          margin: EdgeInsets.only(top: 320, left: 86),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("No Question Added Till !"),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => AddQuestions(
+                                              quizId: widget.quizId)));
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 26),
+                                  height: 50,
+                                  width: MediaQuery.of(context).size.width / 2,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    color: Colors.blue,
+                                  ),
+                                  child: Text(
+                                    "Add Quiz",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 17),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : ListView.builder(
+                          physics: ClampingScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: questionsSnapshot!.docChanges.length,
+                          itemBuilder: (context, index) {
+                            return QuizPlayTile(
+                              questionModel: getQuestionModelFromDataSnapshot(
+                                  questionsSnapshot!.docChanges[index]),
+                              index: index,
+                            );
+                          },
+                        )
+            ],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => QuizSubmitResult(
-                      correct: _correct,
-                      incorrect: _incorrect,
-                      total: _total)));
-        },
-        child: Icon(Icons.check),
-      ),
+      floatingActionButton: questionsSnapshot == null
+          ? Container()
+          : questionsSnapshot!.docChanges.length == 0
+              ? (Container())
+              : FloatingActionButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => QuizSubmitResult(
+                                  correct: _correct,
+                                  incorrect: _incorrect,
+                                  total: _total,
+                                  quizId: widget.quizId,
+                                )));
+                  },
+                  child: Icon(Icons.check),
+                ),
     );
   }
 
@@ -188,9 +237,12 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
               SizedBox(
                 width: 11,
               ),
-              Text(
-                "${widget.questionModel.question} ?",
-                style: TextStyle(fontSize: 17),
+              Container(
+                width: MediaQuery.of(context).size.width / 1.39,
+                child: Text(
+                  "${widget.questionModel.question} ?",
+                  style: TextStyle(fontSize: 17),
+                ),
               ),
             ],
           ),

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:quizmaker/views/home.dart';
+import 'package:quizmaker/views/play_quiz.dart';
 
 class QuizSubmitResult extends StatefulWidget {
   late int correct, incorrect, total;
+  late String quizId;
   QuizSubmitResult(
-      {required this.correct, required this.incorrect, required this.total});
+      {required this.correct, required this.incorrect, required this.total, required this.quizId});
 
   @override
   _QuizSubmitResultState createState() => _QuizSubmitResultState();
@@ -36,7 +38,7 @@ class _QuizSubmitResultState extends State<QuizSubmitResult> {
                 GestureDetector(
                   onTap: () {
                     Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => Home()));
+                        MaterialPageRoute(builder: (context) => PlayQuiz(quizId: widget.quizId)));
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 26),

@@ -46,7 +46,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         // fontFamily: GoogleFonts.lato().fontFamily,
-        fontFamily: GoogleFonts.montserrat().fontFamily,
+        fontFamily: GoogleFonts.ubuntu().fontFamily,
       ),
       home: isLoggedIn ? Home() : SignIn(),
     );

@@ -51,6 +51,7 @@ class _OptionTileState extends State<OptionTile> {
             ),
             SizedBox(width: 15),
             Container(
+              width: MediaQuery.of(context).size.width / 1.4,
               child: Text(widget.description,
                   style: TextStyle(color: Colors.grey, fontSize: 15.7)),
             ),
