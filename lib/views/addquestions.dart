@@ -63,7 +63,7 @@ class _AddQuestionsState extends State<AddQuestions> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 19,
+                      height: 7,
                     ),
                     TextFormField(
                       // ignore: prefer_const_constructors
@@ -150,7 +150,7 @@ class _AddQuestionsState extends State<AddQuestions> {
                       },
                     ),
                     SizedBox(
-                      height: 4,
+                      height: 5,
                     ),
                     Spacer(),
                     Row(
