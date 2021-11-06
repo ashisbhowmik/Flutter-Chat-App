@@ -49,11 +49,33 @@ class _OptionTileState extends State<OptionTile> {
               ),
               alignment: Alignment.center,
             ),
-            SizedBox(width: 15),
-            Container(
-              width: MediaQuery.of(context).size.width / 1.4,
-              child: Text(widget.description,
-                  style: TextStyle(color: Colors.grey, fontSize: 15.7)),
+            // SizedBox(width: 8),
+            Stack(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: 12),
+                  decoration: BoxDecoration(
+                    color: widget.description == widget.optionSelected
+                        ? widget.optionSelected == widget.correctAnswer
+                            ? Colors.green.withOpacity(0.7)
+                            : Colors.red.withOpacity(0.7)
+                        : Colors.white.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(19),
+                  ),
+                  width: MediaQuery.of(context).size.width / 1.4,
+                  child: Text(""),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 18),
+                  width: MediaQuery.of(context).size.width / 1.4,
+                  child: Text(widget.description,
+                      style: TextStyle(
+                          color: widget.description == widget.optionSelected
+                              ? Colors.black
+                              : Colors.grey,
+                          fontSize: 15.7)),
+                ),
+              ],
             ),
           ],
         ),

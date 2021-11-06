@@ -62,9 +62,6 @@ class _AddQuestionsState extends State<AddQuestions> {
                 padding: EdgeInsets.symmetric(horizontal: 26),
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: 7,
-                    ),
                     TextFormField(
                       // ignore: prefer_const_constructors
                       validator: (val) {

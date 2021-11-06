@@ -33,7 +33,7 @@ class _QuizSubmitResultState extends State<QuizSubmitResult> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "You answered ${widget.correct}  question correct and ${widget.incorrect} answer incorrect ",
+                    "You answered ${widget.correct} question correct and ${widget.incorrect} answer incorrect ",
                     textAlign: TextAlign.center,
                   ),
                 ),
