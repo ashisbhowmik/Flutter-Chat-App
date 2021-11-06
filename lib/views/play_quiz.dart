@@ -25,6 +25,7 @@ late int _incorrect = 0;
 late int _notAttempted = 0;
 
 class _PlayQuizState extends State<PlayQuiz> {
+  // ignore: unnecessary_new
   DatabaseServices databaseServices = new DatabaseServices();
   QuerySnapshot? questionsSnapshot;
 
@@ -38,15 +39,12 @@ class _PlayQuizState extends State<PlayQuiz> {
 
   @override
   void initState() {
-    print("QuizId is -------------------> ${widget.quizId}");
     databaseServices.getQuizData(widget.quizId).then((val) {
       questionsSnapshot = val;
       _total = questionsSnapshot!.docChanges.length;
       _correct = 0;
       _incorrect = 0;
       _notAttempted = questionsSnapshot!.docChanges.length;
-      print(
-          "Total Question in this category is ---------------------> $_total}");
       setState(() {});
     });
     super.initState();
@@ -100,7 +98,7 @@ class _PlayQuizState extends State<PlayQuiz> {
                       )
                     : questionsSnapshot!.docChanges.length == 0
                         ? Container(
-                            margin: EdgeInsets.only(top: 320, left: 86),
+                            margin: EdgeInsets.only(top: 320, left: 6),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -170,6 +168,7 @@ class _PlayQuizState extends State<PlayQuiz> {
                                   quizId: widget.quizId,
                                 )));
                   },
+                  tooltip: 'Submit Answer',
                   child: Icon(Icons.check),
                 ),
     );
@@ -279,17 +278,15 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
                   setState(() {
                     optionSelected = widget.questionModel.option1;
                     widget.questionModel.answered = true;
-                    print(
-                        "correct answer is ------------> ${widget.questionModel.correctOption}");
-                    _correct = _correct + 1;
-                    _notAttempted = _notAttempted - 1;
+                    _correct++;
+                    _notAttempted--;
                   });
                 } else {
                   setState(() {
                     optionSelected = widget.questionModel.option1;
                     widget.questionModel.answered = true;
-                    _incorrect = _incorrect + 1;
-                    _notAttempted = _notAttempted - 1;
+                    _incorrect++;
+                    _notAttempted--;
                   });
                 }
               }
@@ -315,15 +312,15 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
                     print(
                         "correct answer is ------------> ${widget.questionModel.correctOption}");
 
-                    _correct = _correct + 1;
-                    _notAttempted = _notAttempted - 1;
+                    _correct++;
+                    _notAttempted--;
                   });
                 } else {
                   setState(() {
                     optionSelected = widget.questionModel.option2;
                     widget.questionModel.answered = true;
-                    _incorrect = _incorrect + 1;
-                    _notAttempted = _notAttempted - 1;
+                    _incorrect++;
+                    _notAttempted--;
                   });
                 }
               }
@@ -346,18 +343,15 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
                   setState(() {
                     optionSelected = widget.questionModel.option3;
                     widget.questionModel.answered = true;
-                    print(
-                        "correct answer is ------------> ${widget.questionModel.correctOption}");
-
-                    _correct = _correct + 1;
-                    _notAttempted = _notAttempted - 1;
+                    _correct++;
+                    _notAttempted--;
                   });
                 } else {
                   setState(() {
                     optionSelected = widget.questionModel.option3;
                     widget.questionModel.answered = true;
-                    _incorrect = _incorrect + 1;
-                    _notAttempted = _notAttempted - 1;
+                    _incorrect++;
+                    _notAttempted--;
                   });
                 }
               }
@@ -380,18 +374,15 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
                   setState(() {
                     optionSelected = widget.questionModel.option4;
                     widget.questionModel.answered = true;
-                    print(
-                        "correct answer is ------------> ${widget.questionModel.correctOption}");
-
-                    _correct = _correct + 1;
-                    _notAttempted = _notAttempted - 1;
+                    _correct++;
+                    _notAttempted--;
                   });
                 } else {
                   setState(() {
                     optionSelected = widget.questionModel.option4;
                     widget.questionModel.answered = true;
-                    _incorrect = _incorrect + 1;
-                    _notAttempted = _notAttempted - 1;
+                    _incorrect++;
+                    _notAttempted--;
                   });
                 }
               }
