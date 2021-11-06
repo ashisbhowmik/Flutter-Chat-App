@@ -6,6 +6,7 @@ import 'package:quizmaker/helper/functions.dart';
 import 'package:quizmaker/models/question_model.dart';
 import 'package:quizmaker/services/database.dart';
 import 'package:quizmaker/views/addquestions.dart';
+import 'package:quizmaker/views/answer_count_tile.dart';
 import 'package:quizmaker/views/quiz_option_tile.dart';
 import 'package:quizmaker/views/quizes_submit_result.dart';
 import 'package:quizmaker/widgets/widget.dart';
@@ -81,73 +82,74 @@ class _PlayQuizState extends State<PlayQuiz> {
       body: RefreshIndicator(
         onRefresh: getNewData,
         child: SingleChildScrollView(
-          child: RefreshIndicator(
-            onRefresh: getNewData,
-            child: Container(
-              child: Column(
-                children: [
-                  questionsSnapshot == null
-                      ? Container(
-                          margin: EdgeInsets.only(top: 300),
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        )
-                      : questionsSnapshot!.docChanges.length == 0
-                          ? Container(
-                              margin: EdgeInsets.only(top: 320, left: 86),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text("No Question Added Till !"),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  AddQuestions(
-                                                      quizId: widget.quizId)));
-                                    },
-                                    child: Container(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 26),
-                                      height: 50,
-                                      width:
-                                          MediaQuery.of(context).size.width / 2,
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(30),
-                                        color: Colors.blue,
-                                      ),
-                                      child: Text(
-                                        "Add Quiz",
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 17),
-                                      ),
+          child: Container(
+            child: Column(
+              children: [
+                InfoHeader(
+                  total: _total,
+                  correct: _correct,
+                  incorrect: _incorrect,
+                  notAttempted: _notAttempted,
+                ),
+                questionsSnapshot == null
+                    ? Container(
+                        margin: EdgeInsets.only(top: 300),
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    : questionsSnapshot!.docChanges.length == 0
+                        ? Container(
+                            margin: EdgeInsets.only(top: 320, left: 86),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("No Question Added Till !"),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => AddQuestions(
+                                                quizId: widget.quizId)));
+                                  },
+                                  child: Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 26),
+                                    height: 50,
+                                    width:
+                                        MediaQuery.of(context).size.width / 2,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30),
+                                      color: Colors.blue,
+                                    ),
+                                    child: Text(
+                                      "Add Quiz",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 17),
                                     ),
                                   ),
-                                ],
-                              ),
-                            )
-                          : ListView.builder(
-                              physics: ClampingScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: questionsSnapshot!.docChanges.length,
-                              itemBuilder: (context, index) {
-                                return QuizPlayTile(
-                                  questionModel:
-                                      getQuestionModelFromDataSnapshot(
-                                          questionsSnapshot!.docChanges[index]),
-                                  index: index,
-                                );
-                              },
-                            )
-                ],
-              ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : ListView.builder(
+                            physics: ClampingScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: questionsSnapshot!.docChanges.length,
+                            itemBuilder: (context, index) {
+                              return QuizPlayTile(
+                                questionModel: getQuestionModelFromDataSnapshot(
+                                    questionsSnapshot!.docChanges[index]),
+                                index: index,
+                              );
+                            },
+                          )
+              ],
             ),
           ),
         ),
@@ -401,6 +403,39 @@ class _QuizPlayTileState extends State<QuizPlayTile> {
               optionSelected: optionSelected,
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+// Info Header
+class InfoHeader extends StatefulWidget {
+  late int correct, incorrect, notAttempted, total;
+  InfoHeader(
+      {required this.correct,
+      required this.incorrect,
+      required this.notAttempted,
+      required this.total});
+
+  @override
+  _InfoHeaderState createState() => _InfoHeaderState();
+}
+
+class _InfoHeaderState extends State<InfoHeader> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 40,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
+        children: [
+          AnswerCountTile(count: widget.total, category: "Total"),
+          AnswerCountTile(count: widget.correct, category: "Correct"),
+          AnswerCountTile(count: widget.incorrect, category: "Incorrect"),
+          AnswerCountTile(count: widget.notAttempted, category: "NotAttempted"),
+          SizedBox(width: 4),
         ],
       ),
     );
