@@ -26,7 +26,7 @@ class _OptionTileState extends State<OptionTile> {
           children: [
             Container(
               width: 25,
-              height: 25,
+              height: 29,
               decoration: BoxDecoration(
                   color: widget.description == widget.optionSelected
                       ? widget.optionSelected == widget.correctAnswer
@@ -71,8 +71,8 @@ class _OptionTileState extends State<OptionTile> {
                   child: Text(widget.description,
                       style: TextStyle(
                           color: widget.description == widget.optionSelected
-                              ? Colors.black
-                              : Colors.black.withOpacity(0.66),
+                              ? Colors.black.withOpacity(0.7)
+                              : Colors.black.withOpacity(0.5),
                           fontSize: 15.7)),
                 ),
               ],

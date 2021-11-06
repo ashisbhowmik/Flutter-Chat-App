@@ -49,7 +49,6 @@ class _PlayQuizState extends State<PlayQuiz> {
     });
     if (infoStream == null) {
       infoStream = Stream<List<int>>.periodic(Duration(milliseconds: 100), (x) {
-        print("this is x $x");
         return [_correct, _incorrect, _notAttempted];
       });
     }
@@ -153,7 +152,9 @@ class _PlayQuizState extends State<PlayQuiz> {
             child: Column(
               children: [
                 InfoHeader(
-                  length: questionsSnapshot!= null ? questionsSnapshot!.docChanges.length : 0,
+                  length: questionsSnapshot != null
+                      ? questionsSnapshot!.docChanges.length
+                      : 0,
                 ),
                 SizedBox(
                   height: 10,
@@ -261,7 +262,7 @@ class _InfoHeaderState extends State<InfoHeader> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Container(
-              height: 40,
+              height: 47,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,

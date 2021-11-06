@@ -33,9 +33,8 @@ class _AnswerCountTileState extends State<AnswerCountTile> {
                 style: TextStyle(color: Colors.white),
               )),
           Container(
-              width: 69,
               alignment: Alignment.center,
-              padding: EdgeInsets.all(5),
+              padding: EdgeInsets.only(left: 14, right: 14),
               decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.6),
                   borderRadius: BorderRadius.only(
@@ -43,7 +42,7 @@ class _AnswerCountTileState extends State<AnswerCountTile> {
                       bottomRight: Radius.circular(18))),
               child: Text(
                 "${widget.category}",
-                style: TextStyle(color: Colors.white, fontSize: 14),
+                style: TextStyle(color: Colors.white, fontSize: 13),
               )),
         ],
       ),
