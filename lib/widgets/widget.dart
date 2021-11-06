@@ -6,13 +6,13 @@ Widget appBar(BuildContext context) {
       style: DefaultTextStyle.of(context).style,
       children: const <TextSpan>[
         TextSpan(
-            text: 'Quizo',
+            text: 'Quiz',
             style: TextStyle(
                 color: Colors.blue,
                 fontSize: 29,
                 decoration: TextDecoration.none)),
         TextSpan(
-            text: 'Graphy',
+            text: 'Maker',
             style: TextStyle(
                 color: Colors.black,
                 decoration: TextDecoration.none,
@@ -25,13 +25,13 @@ Widget appBar(BuildContext context) {
 Widget appBar2(BuildContext context) {
   return Row(
     children: [
-      Text("Quizo",
+      Text("Quiz",
           style: TextStyle(
               color: Colors.blue,
               fontSize: 27,
               decoration: TextDecoration.none)),
       Text(
-        "Graphy",
+        "Maker",
         style: TextStyle(
             color: Colors.black, decoration: TextDecoration.none, fontSize: 9),
       ),

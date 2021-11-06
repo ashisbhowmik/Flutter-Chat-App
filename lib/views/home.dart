@@ -104,7 +104,6 @@ class _HomeState extends State<Home> {
           child: QuizList(),
         ),
       ),
-      drawer: Drawer(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(

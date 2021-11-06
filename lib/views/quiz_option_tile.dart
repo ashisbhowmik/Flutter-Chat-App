@@ -44,7 +44,7 @@ class _OptionTileState extends State<OptionTile> {
                 widget.option,
                 style: TextStyle(
                     color: widget.description == widget.optionSelected
-                        ? Colors.white
+                        ? Colors.black
                         : Colors.grey),
               ),
               alignment: Alignment.center,
@@ -66,6 +66,7 @@ class _OptionTileState extends State<OptionTile> {
                   child: Text(""),
                 ),
                 Container(
+                  padding: EdgeInsets.only(left: 12),
                   margin: EdgeInsets.only(left: 18),
                   width: MediaQuery.of(context).size.width / 1.4,
                   child: Text(widget.description,
