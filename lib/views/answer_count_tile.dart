@@ -43,7 +43,7 @@ class _AnswerCountTileState extends State<AnswerCountTile> {
                       bottomRight: Radius.circular(18))),
               child: Text(
                 "${widget.category}",
-                style: TextStyle(color: Colors.white, fontSize: 12),
+                style: TextStyle(color: Colors.white, fontSize: 14),
               )),
         ],
       ),

@@ -49,7 +49,6 @@ class _OptionTileState extends State<OptionTile> {
               ),
               alignment: Alignment.center,
             ),
-            // SizedBox(width: 8),
             Stack(
               children: [
                 Container(
@@ -67,13 +66,13 @@ class _OptionTileState extends State<OptionTile> {
                 ),
                 Container(
                   padding: EdgeInsets.only(left: 12),
-                  margin: EdgeInsets.only(left: 18),
+                  margin: EdgeInsets.only(left: 10),
                   width: MediaQuery.of(context).size.width / 1.4,
                   child: Text(widget.description,
                       style: TextStyle(
                           color: widget.description == widget.optionSelected
                               ? Colors.black
-                              : Colors.grey,
+                              : Colors.black.withOpacity(0.66),
                           fontSize: 15.7)),
                 ),
               ],
