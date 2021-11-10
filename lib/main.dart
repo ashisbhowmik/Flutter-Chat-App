@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quizmaker/helper/functions.dart';
-import 'package:quizmaker/views/home.dart';
-import 'package:quizmaker/views/signin.dart';
+import 'package:quizmaker/views/QuizSections/quiz_home_page.dart';
+import 'package:quizmaker/views/AuthSections/signin.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
 
@@ -48,7 +48,7 @@ class _MyAppState extends State<MyApp> {
         // fontFamily: GoogleFonts.lato().fontFamily,
         fontFamily: GoogleFonts.hind().fontFamily,
       ),
-      home: isLoggedIn ? Home() : SignIn(),
+      home: isLoggedIn ? QuizHomePage() : SignIn(),
     );
   }
 }

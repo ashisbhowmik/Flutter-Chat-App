@@ -7,19 +7,19 @@ import 'package:quizmaker/services/auth.dart';
 import 'package:quizmaker/services/database.dart';
 import 'package:quizmaker/views/QuizSections/create_quiz.dart';
 import 'package:quizmaker/views/QuizSections/play_quiz.dart';
-import 'package:quizmaker/views/signin.dart';
+import 'package:quizmaker/views/AuthSections/signin.dart';
 import 'package:quizmaker/widgets/widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/cupertino.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class QuizHomePage extends StatefulWidget {
+  const QuizHomePage({Key? key}) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  _QuizHomePageState createState() => _QuizHomePageState();
 }
 
-class _HomeState extends State<Home> {
+class _QuizHomePageState extends State<QuizHomePage> {
   QuerySnapshot? quizSnapshot;
   Future refreshFunction() async {
     setState(() {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quizmaker/views/home.dart';
+import 'package:quizmaker/views/QuizSections/quiz_home_page.dart';
 import 'package:quizmaker/views/QuizSections/play_quiz.dart';
 
 class QuizSubmitResult extends StatefulWidget {

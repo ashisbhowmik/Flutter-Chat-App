@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:quizmaker/helper/functions.dart';
 import 'package:quizmaker/services/auth.dart';
-import 'package:quizmaker/views/singup.dart';
+import 'package:quizmaker/views/AuthSections/singup.dart';
 import 'package:quizmaker/widgets/widget.dart';
-import 'home.dart';
+import '../QuizSections/quiz_home_page.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -31,7 +31,7 @@ class _SignInState extends State<SignIn> {
           });
           HelperFunctions.saveUserLoggedInDetatils(isLoggedIn: true);
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Home()));
+              context, MaterialPageRoute(builder: (context) => QuizHomePage()));
         } else {
           print("Error during SignIn 🥰🥰🥰🥰🥰");
         }
