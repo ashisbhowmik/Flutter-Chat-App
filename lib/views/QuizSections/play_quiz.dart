@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quizmaker/models/question_model.dart';
 import 'package:quizmaker/services/database.dart';
-import 'package:quizmaker/views/addquestions.dart';
-import 'package:quizmaker/views/answer_count_tile.dart';
-import 'package:quizmaker/views/quiz_option_tile.dart';
-import 'package:quizmaker/views/quizes_submit_result.dart';
+import 'package:quizmaker/views/QuizSections/addquestions.dart';
+import 'package:quizmaker/views/QuizSections/answer_count_tile.dart';
+import 'package:quizmaker/views/QuizSections/quiz_option_tile.dart';
+import 'package:quizmaker/views/QuizSections/quizes_submit_result.dart';
 import 'dart:async';
 
 class PlayQuiz extends StatefulWidget {
