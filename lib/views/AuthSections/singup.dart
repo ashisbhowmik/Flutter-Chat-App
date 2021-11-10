@@ -2,9 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:quizmaker/helper/functions.dart';
 import 'package:quizmaker/services/auth.dart';
+import 'package:quizmaker/services/database.dart';
 import 'package:quizmaker/views/AuthSections/signin.dart';
+import 'package:quizmaker/views/ChatSections/chat_home_page.dart';
 import 'package:quizmaker/widgets/widget.dart';
-import '../QuizSections/quiz_home_page.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -17,6 +18,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
   late String name, email, password;
   bool isLoading = false;
+  bool isUserExistsInDatabase = false;
 
   signUp() async {
     if (_formKey.currentState!.validate()) {
@@ -25,15 +27,26 @@ class _SignUpPageState extends State<SignUpPage> {
         isLoading = true;
       });
       await AuthServices().handleSignUp(email, password).then((val) {
-        if (val != null) {
+        if (val == null) {
+          setState(() {
+            isUserExistsInDatabase = true;
+          });
+          print("null val is ${val}");
+          print("isUserExistsInDatabase ${isUserExistsInDatabase}");
+          print("Error during SignUp 🥰🥰🥰🥰🥰");
+        } else {
           setState(() {
             isLoading = false;
           });
+          print("val is ${val}");
+          Map<String, dynamic> userInfoMap = {
+            "email": email,
+            "userName": name,
+          };
           HelperFunctions.saveUserLoggedInDetatils(isLoggedIn: true);
+          DatabaseServices().addUserInfo(email, userInfoMap);
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => QuizHomePage()));
-        } else {
-          print("Error during SignUp 🥰🥰🥰🥰🥰");
+              context, MaterialPageRoute(builder: (context) => ChatHomePage()));
         }
       });
     }

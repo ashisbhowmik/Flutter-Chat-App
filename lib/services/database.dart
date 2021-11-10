@@ -2,13 +2,23 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 class DatabaseServices {
+  Future addUserInfo(String email, userInfoMap) async {
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(email)
+        .set(userInfoMap)
+        .catchError((e) {
+      print("addQuizData Error is ------------>>> ${e.toString()}");
+    });
+  }
+
   Future<void> addQuizData(quizData, String quizId) async {
     await FirebaseFirestore.instance
         .collection('Quizes')
         .doc(quizId)
         .set(quizData)
         .catchError((e) {
-      print(" addQuizData Error is ------------>>> ${e.toString()}");
+      print("addQuizData Error is ------------>>> ${e.toString()}");
     });
   }
 
