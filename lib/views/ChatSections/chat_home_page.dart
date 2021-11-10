@@ -44,8 +44,9 @@ class _ChatHomePageState extends State<ChatHomePage> {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => QuizHomePage()));
         },
-        child: Icon(Icons.add),
+        child: Icon(Icons.quiz,size: 30,),
       ),
+
     );
   }
 }
