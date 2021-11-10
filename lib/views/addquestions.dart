@@ -41,25 +41,25 @@ class _AddQuestionsState extends State<AddQuestions> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Add Your Questions",
           style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
         elevation: 0.39,
       ),
       body: isLoading
           ? Container(
-              child: Center(
+              child: const Center(
                 child: CircularProgressIndicator(),
               ),
             )
           : Form(
               key: _formKey,
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 26),
+                padding: const EdgeInsets.symmetric(horizontal: 26),
                 child: Column(
                   children: [
                     TextFormField(
