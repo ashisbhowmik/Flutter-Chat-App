@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:quizmaker/helper/functions.dart';
 import 'package:quizmaker/services/auth.dart';
+import 'package:quizmaker/services/database.dart';
 import 'package:quizmaker/views/AuthSections/singup.dart';
 import 'package:quizmaker/views/ChatSections/chat_home_page.dart';
 import 'package:quizmaker/widgets/widget.dart';
@@ -19,18 +21,24 @@ class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
   late String email, password;
   bool isLoading = false;
-
   signIn() async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         isLoading = true;
       });
-      await AuthServices().handleSignIn(email, password).then((val) {
+      await AuthServices().handleSignIn(email, password).then((val) async {
         if (val != null) {
+          QuerySnapshot snapshot =
+              await DatabaseServices().getUserByUserEmail(email);
+          HelperFunctions.saveUserLoggedInDetatils(isLoggedIn: true);
+          HelperFunctions.saveUserNameDetatils(
+              userName: snapshot.docChanges[0].doc['userName']);
+          HelperFunctions.saveUserEmailDetatils(
+              userEmail: snapshot.docChanges[0].doc['email']);
+          print("----------------> Completed");
           setState(() {
             isLoading = false;
           });
-          HelperFunctions.saveUserLoggedInDetatils(isLoggedIn: true);
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => ChatHomePage()));
         } else {

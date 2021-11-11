@@ -31,19 +31,18 @@ class _SignUpPageState extends State<SignUpPage> {
           setState(() {
             isUserExistsInDatabase = true;
           });
-          print("null val is ${val}");
-          print("isUserExistsInDatabase ${isUserExistsInDatabase}");
           print("Error during SignUp 🥰🥰🥰🥰🥰");
         } else {
           setState(() {
             isLoading = false;
           });
-          print("val is ${val}");
           Map<String, dynamic> userInfoMap = {
             "email": email,
             "userName": name,
           };
           HelperFunctions.saveUserLoggedInDetatils(isLoggedIn: true);
+          HelperFunctions.saveUserNameDetatils(userName: name);
+          HelperFunctions.saveUserEmailDetatils(userEmail: email);
           DatabaseServices().addUserInfo(email, userInfoMap);
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => ChatHomePage()));

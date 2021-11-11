@@ -12,6 +12,39 @@ class DatabaseServices {
     });
   }
 
+  Future getUserInfo() async {
+    return await FirebaseFirestore.instance
+        .collection("users")
+        .get()
+        .catchError((e) {
+      print("getUserInfo Error is ------------>>> ${e.toString()}");
+    });
+  }
+
+  Future getUserByUsername(String username) async {
+    return await FirebaseFirestore.instance
+        .collection("users")
+        .where("userName", isEqualTo: username)
+        .get();
+  }
+
+  Future getUserByUserEmail(String userEmail) async {
+    return await FirebaseFirestore.instance
+        .collection("users")
+        .where("email", isEqualTo: userEmail)
+        .get();
+  }
+
+  Future createChatRoom(String roomId, roomMap) async {
+    await FirebaseFirestore.instance
+        .collection("ChatRoom")
+        .doc(roomId)
+        .set(roomMap)
+        .catchError((e) {
+      print("createChatRoom Error is ------------>>> ${e.toString()}");
+    });
+  }
+
   Future<void> addQuizData(quizData, String quizId) async {
     await FirebaseFirestore.instance
         .collection('Quizes')

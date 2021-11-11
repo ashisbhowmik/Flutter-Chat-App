@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:quizmaker/views/ChatSections/TabBarPages/calls_pages.dart';
-import 'package:quizmaker/views/ChatSections/TabBarPages/chats_page.dart';
-import 'package:quizmaker/views/ChatSections/TabBarPages/status_page.dart';
+import 'package:quizmaker/helper/constants.dart';
+import 'package:quizmaker/helper/functions.dart';
+import 'package:quizmaker/views/ChatSections/TabBarPages/all_chats.dart';
+import 'package:quizmaker/views/ChatSections/TabBarPages/search_page.dart';
 import 'package:quizmaker/views/QuizSections/quiz_home_page.dart';
 
 class ChatHomePage extends StatefulWidget {
@@ -16,9 +17,10 @@ class ChatHomePage extends StatefulWidget {
 class _ChatHomePageState extends State<ChatHomePage>
     with SingleTickerProviderStateMixin {
   TabController? _tabController;
+
   @override
   void initState() {
-    _tabController = TabController(length: 3, vsync: this, initialIndex: 1);
+    _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     super.initState();
   }
 
@@ -43,17 +45,14 @@ class _ChatHomePageState extends State<ChatHomePage>
               text: "CHATS",
             ),
             Tab(
-              text: "STATUS",
-            ),
-            Tab(
-              text: "CALLS",
+              text: "SEARCH",
             ),
           ],
         ),
       ),
       body: TabBarView(
         controller: _tabController,
-        children: [ChatsPage(), StatusPage(), CallsPage()],
+        children: [AllChats(), SearchPage()],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
