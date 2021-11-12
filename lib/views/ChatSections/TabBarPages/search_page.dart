@@ -16,8 +16,8 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   late TextEditingController _searchTerm = new TextEditingController();
   DatabaseServices databaseServices = new DatabaseServices();
-  late QuerySnapshot querySnapshot;
-  late QuerySnapshot usersSnapshot;
+  QuerySnapshot? querySnapshot;
+  QuerySnapshot? usersSnapshot;
   bool isLoading = false;
 
   initialSearch() {
@@ -58,7 +58,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget SearchList() {
     return querySnapshot == null
         ? Container()
-        : querySnapshot.docChanges.length == 0
+        : querySnapshot!.docChanges.length == 0
             ? Container(
                 margin: EdgeInsets.only(bottom: 20),
                 child: Center(
@@ -67,11 +67,11 @@ class _SearchPageState extends State<SearchPage> {
               )
             : ListView.builder(
                 shrinkWrap: true,
-                itemCount: querySnapshot.docChanges.length,
+                itemCount: querySnapshot!.docChanges.length,
                 itemBuilder: (context, index) {
                   return SearchTile(
-                    userName: querySnapshot.docChanges[index].doc["userName"],
-                    userEmail: querySnapshot.docChanges[index].doc["email"],
+                    userName: querySnapshot!.docChanges[index].doc["userName"],
+                    userEmail: querySnapshot!.docChanges[index].doc["email"],
                   );
                 });
   }
@@ -89,11 +89,11 @@ class _SearchPageState extends State<SearchPage> {
             : ListView.builder(
                 physics: ClampingScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: usersSnapshot.docChanges.length,
+                itemCount: usersSnapshot!.docChanges.length,
                 itemBuilder: (context, index) {
                   return UsersList(
-                    userName: usersSnapshot.docChanges[index].doc['userName'],
-                    userEmail: usersSnapshot.docChanges[index].doc['email'],
+                    userName: usersSnapshot!.docChanges[index].doc['userName'],
+                    userEmail: usersSnapshot!.docChanges[index].doc['email'],
                   );
                 },
               )
@@ -162,8 +162,9 @@ class SearchTile extends StatefulWidget {
 }
 
 class _SearchTileState extends State<SearchTile> {
+  late String roomId;
   goToConversationPage(String username) async {
-    String roomId = "${Constants.myName}_$username";
+    roomId = "${Constants.myName}_$username";
     print("username is -------------------->>>> ${Constants.myName}");
     print("Room Id is -------------------->>>> ${roomId}");
     List<String> users = [Constants.myName, username];
@@ -173,7 +174,13 @@ class _SearchTileState extends State<SearchTile> {
     };
     await DatabaseServices().createChatRoom(roomId, chatRoomMap);
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ConversationPage()));
+        context,
+        MaterialPageRoute(
+            builder: (context) => ConversationPage(
+                  userName: widget.userName,
+                  userEmail: widget.userEmail,
+                  chatRoomId: roomId,
+                )));
   }
 
   @override
@@ -243,8 +250,9 @@ class UsersList extends StatefulWidget {
 }
 
 class _UsersListState extends State<UsersList> {
+  late String roomId;
   goToConversationPage(String username) async {
-    String roomId = "${Constants.myName}_$username";
+    roomId = "${Constants.myName}_$username";
     print("username is -------------------->>>> ${Constants.myName}");
     print("Room Id is -------------------->>>> ${roomId}");
     List<String> users = [Constants.myName, username];
@@ -254,7 +262,13 @@ class _UsersListState extends State<UsersList> {
     };
     await DatabaseServices().createChatRoom(roomId, chatRoomMap);
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ConversationPage()));
+        context,
+        MaterialPageRoute(
+            builder: (context) => ConversationPage(
+                  userName: widget.userName,
+                  userEmail: widget.userEmail,
+                  chatRoomId: roomId,
+                )));
   }
 
   @override

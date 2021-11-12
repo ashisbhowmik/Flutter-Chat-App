@@ -45,6 +45,33 @@ class DatabaseServices {
     });
   }
 
+  Future addChatInChatRoom(String roomId, chatMap) async {
+    await FirebaseFirestore.instance
+        .collection("ChatRoom")
+        .doc(roomId)
+        .collection("chats")
+        .add(chatMap)
+        .catchError((e) {
+      print("addChatInChatRoom Error is ------------>>> ${e.toString()}");
+    });
+  }
+
+  Future getChatFromChatRoom(String roomId) async {
+    return await FirebaseFirestore.instance
+        .collection("ChatRoom")
+        .doc(roomId)
+        .collection("chats")
+        .orderBy("timeStamp", descending: false)
+        .get();
+  }
+
+  Future getChatRoom(String userName) async {
+    return await FirebaseFirestore.instance
+        .collection("ChatRoom")
+        .where("users", arrayContains: userName)
+        .get();
+  }
+
   Future<void> addQuizData(quizData, String quizId) async {
     await FirebaseFirestore.instance
         .collection('Quizes')
