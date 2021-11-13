@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quizmaker/helper/constants.dart';
 import 'package:quizmaker/services/database.dart';
-import 'package:quizmaker/views/ChatSections/TabBarPages/all_chats.dart';
 import 'package:quizmaker/views/ChatSections/chat_home_page.dart';
 
 class ConversationPage extends StatefulWidget {
@@ -17,7 +16,7 @@ class ConversationPage extends StatefulWidget {
 
 class _ConversationPageState extends State<ConversationPage> {
   TextEditingController _message = new TextEditingController();
-  QuerySnapshot? chatQuerySnapshot;
+  Stream? chatQuerySnapshot;
 
   sendMessege() {
     if (_message.text.isNotEmpty) {
@@ -36,32 +35,40 @@ class _ConversationPageState extends State<ConversationPage> {
   }
 
   Widget chatList() {
-    return chatQuerySnapshot != null
-        ? Container(
-            child: Column(
-              children: [
-                ListView.builder(
-                    shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
-                    itemCount: chatQuerySnapshot!.docChanges.length,
+    return Container(
+        child: Column(
+      children: [
+        StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection("ChatRoom")
+                .doc(widget.chatRoomId)
+                .collection("chats")
+                .orderBy("timeStamp", descending: false)
+                .snapshots(),
+            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                    itemCount: snapshot.data!.docChanges.length,
                     itemBuilder: (context, index) {
                       return MessageTile(
-                        username: widget.userName,
                         message:
-                            chatQuerySnapshot!.docChanges[index].doc['message'],
-                        sendBy:
-                            chatQuerySnapshot!.docChanges[index].doc['sendBy'],
+                            snapshot.data!.docChanges[index].doc['message'],
+                        sendBy: snapshot.data!.docChanges[index].doc['sendBy'],
+                        username: snapshot
+                            .data!.docChanges[index].doc['chatRoomId']
+                            .toString()
+                            .replaceAll("_", "")
+                            .replaceAll(Constants.myName, ""),
                       );
-                    }),
-              ],
-            ),
-          )
-        : Container(
-            margin: EdgeInsets.only(top: 270),
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
+                    });
+              } else {
+                return Center(
+                  child: LinearProgressIndicator(),
+                );
+              }
+            })
+      ],
+    ));
   }
 
   @override
@@ -157,7 +164,7 @@ class _ConversationPageState extends State<ConversationPage> {
 class MessageTile extends StatefulWidget {
   late String message, username, sendBy;
   MessageTile(
-      {required this.message, required this.username, required this.sendBy});
+      {required this.message, this.username = "", required this.sendBy});
 
   @override
   _MessageTileState createState() => _MessageTileState();

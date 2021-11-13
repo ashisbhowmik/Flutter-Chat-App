@@ -62,7 +62,7 @@ class DatabaseServices {
         .doc(roomId)
         .collection("chats")
         .orderBy("timeStamp", descending: false)
-        .get();
+        .snapshots();
   }
 
   Future getChatRoom(String userName) async {
