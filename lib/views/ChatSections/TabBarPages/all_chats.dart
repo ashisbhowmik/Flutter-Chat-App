@@ -63,7 +63,9 @@ class _AllChatsState extends State<AllChats> {
               )
         : Container(
             child: Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: Colors.red,
+              ),
             ),
           );
   }

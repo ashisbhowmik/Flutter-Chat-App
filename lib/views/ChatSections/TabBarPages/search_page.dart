@@ -144,7 +144,7 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                     ),
                     SearchList(),
-                    usersInDatabase(),
+                    // usersInDatabase(),
                   ],
                 ),
               ),
@@ -196,6 +196,7 @@ class _SearchTileState extends State<SearchTile> {
                 children: [
                   Container(
                     margin: EdgeInsets.only(bottom: 5),
+                    padding: EdgeInsets.all(8),
                     child: Text(
                       "Search for  ${widget.userName}",
                       style: TextStyle(fontSize: 17),

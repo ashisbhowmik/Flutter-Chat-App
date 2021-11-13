@@ -48,17 +48,14 @@ class _ConversationPageState extends State<ConversationPage> {
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData) {
                 return ListView.builder(
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
                     itemCount: snapshot.data!.docChanges.length,
                     itemBuilder: (context, index) {
                       return MessageTile(
                         message:
                             snapshot.data!.docChanges[index].doc['message'],
                         sendBy: snapshot.data!.docChanges[index].doc['sendBy'],
-                        username: snapshot
-                            .data!.docChanges[index].doc['chatRoomId']
-                            .toString()
-                            .replaceAll("_", "")
-                            .replaceAll(Constants.myName, ""),
                       );
                     });
               } else {
@@ -121,7 +118,7 @@ class _ConversationPageState extends State<ConversationPage> {
                         horizontal: 19,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.22),
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(36),
                       ),
                       width: MediaQuery.of(context).size.width / 1.28,
@@ -136,7 +133,7 @@ class _ConversationPageState extends State<ConversationPage> {
                     ),
                     Container(
                         decoration: BoxDecoration(
-                          color: Colors.blue,
+                          color: Colors.red,
                           borderRadius: BorderRadius.circular(36),
                         ),
                         margin: EdgeInsets.only(left: 4),
@@ -162,9 +159,8 @@ class _ConversationPageState extends State<ConversationPage> {
 }
 
 class MessageTile extends StatefulWidget {
-  late String message, username, sendBy;
-  MessageTile(
-      {required this.message, this.username = "", required this.sendBy});
+  late String message, sendBy;
+  MessageTile({required this.message, required this.sendBy});
 
   @override
   _MessageTileState createState() => _MessageTileState();
@@ -183,7 +179,7 @@ class _MessageTileState extends State<MessageTile> {
           horizontal: 27,
           vertical: 12,
         ),
-        margin: EdgeInsets.only(right: 12, left: 8, top: 8, bottom: 8),
+        margin: EdgeInsets.only(right: 22, left: 22, top: 8, bottom: 8),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: widget.sendBy == Constants.myName
