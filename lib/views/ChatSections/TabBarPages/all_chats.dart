@@ -35,26 +35,32 @@ class _AllChatsState extends State<AllChats> {
 
   Widget chatRoomList() {
     return chatRoomSnapshot != null
-        ? Container(
-            child: Column(
-              children: [
-                ListView.builder(
-                    shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
-                    itemCount: chatRoomSnapshot!.docChanges.length,
-                    itemBuilder: (context, index) {
-                      return ChatRoomTile(
-                        userName: chatRoomSnapshot!
-                            .docChanges[index].doc['chatRoomId']
-                            .replaceAll('_', '')
-                            .replaceAll(Constants.myName, ''),
-                        chatRoomId: chatRoomSnapshot!
-                            .docChanges[index].doc['chatRoomId'],
-                      );
-                    }),
-              ],
-            ),
-          )
+        ? chatRoomSnapshot!.docChanges.length == 0
+            ? Container(
+                child: Center(
+                  child: Text("No Recent chat.."),
+                ),
+              )
+            : Container(
+                child: Column(
+                  children: [
+                    ListView.builder(
+                        shrinkWrap: true,
+                        physics: ClampingScrollPhysics(),
+                        itemCount: chatRoomSnapshot!.docChanges.length,
+                        itemBuilder: (context, index) {
+                          return ChatRoomTile(
+                            userName: chatRoomSnapshot!
+                                .docChanges[index].doc['chatRoomId']
+                                .replaceAll('_', '')
+                                .replaceAll(Constants.myName, ''),
+                            chatRoomId: chatRoomSnapshot!
+                                .docChanges[index].doc['chatRoomId'],
+                          );
+                        }),
+                  ],
+                ),
+              )
         : Container(
             child: Center(
               child: CircularProgressIndicator(),
@@ -86,7 +92,7 @@ class _ChatRoomTileState extends State<ChatRoomTile> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         Navigator.push(
             context,
@@ -95,7 +101,6 @@ class _ChatRoomTileState extends State<ChatRoomTile> {
                     userName: widget.userName, chatRoomId: widget.chatRoomId)));
       },
       child: Container(
-        color: Colors.red,
         margin: EdgeInsets.only(bottom: 12),
         padding: EdgeInsets.all(19),
         child: Row(
