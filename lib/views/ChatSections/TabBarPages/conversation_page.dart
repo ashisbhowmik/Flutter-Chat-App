@@ -16,7 +16,6 @@ class ConversationPage extends StatefulWidget {
 
 class _ConversationPageState extends State<ConversationPage> {
   TextEditingController _message = new TextEditingController();
-  Stream? chatQuerySnapshot;
 
   sendMessege() {
     if (_message.text.isNotEmpty) {
@@ -36,10 +35,8 @@ class _ConversationPageState extends State<ConversationPage> {
 
   Widget chatList() {
     return Container(
-        child: Column(
-      children: [
-        StreamBuilder(
-            stream: FirebaseFirestore.instance
+        child: StreamBuilder(
+            stream:FirebaseFirestore.instance
                 .collection("ChatRoom")
                 .doc(widget.chatRoomId)
                 .collection("chats")
@@ -63,19 +60,7 @@ class _ConversationPageState extends State<ConversationPage> {
                   child: LinearProgressIndicator(),
                 );
               }
-            })
-      ],
-    ));
-  }
-
-  @override
-  void initState() {
-    DatabaseServices().getChatFromChatRoom(widget.chatRoomId).then((val) {
-      setState(() {
-        chatQuerySnapshot = val;
-      });
-    });
-    super.initState();
+            }));
   }
 
   @override
@@ -103,7 +88,7 @@ class _ConversationPageState extends State<ConversationPage> {
           children: [
             SingleChildScrollView(
                 child: Container(
-                    margin: EdgeInsets.only(bottom: 169), child: chatList())),
+                    margin: EdgeInsets.only(bottom: 150), child: chatList())),
             Container(
               alignment: Alignment.bottomCenter,
               child: Container(

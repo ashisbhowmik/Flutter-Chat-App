@@ -56,14 +56,15 @@ class DatabaseServices {
     });
   }
 
-  Future getChatFromChatRoom(String roomId) async {
-    return await FirebaseFirestore.instance
-        .collection("ChatRoom")
-        .doc(roomId)
-        .collection("chats")
-        .orderBy("timeStamp", descending: false)
-        .snapshots();
-  }
+  //  this is decleared in conversaiton page
+  // getChatFromChatRoom(String roomId) async {
+  //   return await FirebaseFirestore.instance
+  //       .collection("ChatRoom")
+  //       .doc(roomId)
+  //       .collection("chats")
+  //       .orderBy("timeStamp", descending: false)
+  //       .snapshots();
+  // }
 
   Future getChatRoom(String userName) async {
     return await FirebaseFirestore.instance
@@ -98,6 +99,11 @@ class DatabaseServices {
         .whenComplete(() => print("Completed initialization ☺☺☺☺☺☺☺"));
     return await FirebaseFirestore.instance.collection("Quizes").get();
   }
+  getCategoryQuizesDetailsSnapshot() {
+    Firebase.initializeApp()
+        .whenComplete(() => print("Completed initialization ☺☺☺☺☺☺☺"));
+    return FirebaseFirestore.instance.collection("Quizes").snapshots();
+  }
 
   getQuizData(String quizId) async {
     return await FirebaseFirestore.instance
@@ -105,5 +111,12 @@ class DatabaseServices {
         .doc(quizId)
         .collection("QNA")
         .get();
+  }
+  getQuizDataSnapshot(String quizId) {
+    return FirebaseFirestore.instance
+        .collection("Quizes")
+        .doc(quizId)
+        .collection("QNA")
+        .snapshots();
   }
 }
