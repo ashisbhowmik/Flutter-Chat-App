@@ -99,6 +99,7 @@ class DatabaseServices {
         .whenComplete(() => print("Completed initialization ☺☺☺☺☺☺☺"));
     return await FirebaseFirestore.instance.collection("Quizes").get();
   }
+
   getCategoryQuizesDetailsSnapshot() {
     Firebase.initializeApp()
         .whenComplete(() => print("Completed initialization ☺☺☺☺☺☺☺"));
@@ -112,6 +113,7 @@ class DatabaseServices {
         .collection("QNA")
         .get();
   }
+
   getQuizDataSnapshot(String quizId) {
     return FirebaseFirestore.instance
         .collection("Quizes")

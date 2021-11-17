@@ -36,7 +36,7 @@ class _ConversationPageState extends State<ConversationPage> {
   Widget chatList() {
     return Container(
         child: StreamBuilder(
-            stream:FirebaseFirestore.instance
+            stream: FirebaseFirestore.instance
                 .collection("ChatRoom")
                 .doc(widget.chatRoomId)
                 .collection("chats")

@@ -176,11 +176,9 @@ class _PlayQuizState extends State<PlayQuiz> {
                                               quizId: widget.quizId)));
                                 },
                                 child: Container(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 26),
+                                  padding: EdgeInsets.symmetric(horizontal: 26),
                                   height: 50,
-                                  width:
-                                      MediaQuery.of(context).size.width / 2,
+                                  width: MediaQuery.of(context).size.width / 2,
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(30),
@@ -197,29 +195,30 @@ class _PlayQuizState extends State<PlayQuiz> {
                           ),
                         )
                       : StreamBuilder(
-                stream: DatabaseServices().getQuizDataSnapshot(widget.quizId),
-                  builder: (context,AsyncSnapshot<QuerySnapshot> snapshot){
-                    if(snapshot.hasData){
-                        return ListView.builder(
-                          physics: ClampingScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: snapshot.data!.docChanges.length,
-                          itemBuilder: (context, index) {
-                            return QuizPlayTile(
-                              questionModel: getQuestionModelFromDataSnapshot(
-                                  snapshot.data!.docChanges[index]),
-                              index: index,
-                            );
-                          },
-                        );
-                    }
-                    else {
-                      return Center(
-                        child: LinearProgressIndicator(),
-                      );
-                    }
-                  }
-              ),
+                          stream: DatabaseServices()
+                              .getQuizDataSnapshot(widget.quizId),
+                          builder:
+                              (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (snapshot.hasData) {
+                              return ListView.builder(
+                                physics: ClampingScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: snapshot.data!.docChanges.length,
+                                itemBuilder: (context, index) {
+                                  return QuizPlayTile(
+                                    questionModel:
+                                        getQuestionModelFromDataSnapshot(
+                                            snapshot.data!.docChanges[index]),
+                                    index: index,
+                                  );
+                                },
+                              );
+                            } else {
+                              return Center(
+                                child: LinearProgressIndicator(),
+                              );
+                            }
+                          }),
             ],
           ),
         ),

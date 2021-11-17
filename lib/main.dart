@@ -4,8 +4,8 @@ import 'package:quizmaker/views/ChatSections/chat_home_page.dart';
 import 'package:quizmaker/views/AuthSections/signin.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
-
 void main() {
+
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarColor: Colors.white,
