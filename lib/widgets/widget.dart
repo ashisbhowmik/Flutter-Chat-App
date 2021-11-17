@@ -6,13 +6,13 @@ Widget appBar(BuildContext context) {
       style: DefaultTextStyle.of(context).style,
       children: const <TextSpan>[
         TextSpan(
-            text: 'Quiz',
+            text: 'Start',
             style: TextStyle(
                 color: Colors.blue,
                 fontSize: 29,
                 decoration: TextDecoration.none)),
         TextSpan(
-            text: 'Maker',
+            text: 'Chat',
             style: TextStyle(
                 color: Colors.black,
                 decoration: TextDecoration.none,
@@ -21,20 +21,45 @@ Widget appBar(BuildContext context) {
     ),
   );
 }
-
 Widget appBar2(BuildContext context) {
-  return Row(
-    children: [
-      Text("Quiz",
-          style: TextStyle(
-              color: Colors.blue,
-              fontSize: 27,
-              decoration: TextDecoration.none)),
-      Text(
-        "Maker",
-        style: TextStyle(
-            color: Colors.black, decoration: TextDecoration.none, fontSize: 9),
-      ),
-    ],
+  return RichText(
+    text: TextSpan(
+      style: DefaultTextStyle.of(context).style,
+      children: const <TextSpan>[
+        TextSpan(
+            text: 'Sign',
+            style: TextStyle(
+                color: Colors.blue,
+                fontSize: 29,
+                decoration: TextDecoration.none)),
+        TextSpan(
+            text: 'In',
+            style: TextStyle(
+                color: Colors.black,
+                decoration: TextDecoration.none,
+                fontSize: 27)),
+      ],
+    ),
+  );
+}
+Widget appBar3(BuildContext context) {
+  return RichText(
+    text: TextSpan(
+      style: DefaultTextStyle.of(context).style,
+      children: const <TextSpan>[
+        TextSpan(
+            text: 'Sign',
+            style: TextStyle(
+                color: Colors.blue,
+                fontSize: 29,
+                decoration: TextDecoration.none)),
+        TextSpan(
+            text: 'Up',
+            style: TextStyle(
+                color: Colors.black,
+                decoration: TextDecoration.none,
+                fontSize: 27)),
+      ],
+    ),
   );
 }

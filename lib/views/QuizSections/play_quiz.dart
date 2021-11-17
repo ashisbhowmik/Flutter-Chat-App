@@ -29,23 +29,16 @@ class _PlayQuizState extends State<PlayQuiz> {
   DatabaseServices databaseServices = new DatabaseServices();
   QuerySnapshot? questionsSnapshot;
 
-  Future getNewData() async {
-    setState(() {
-      DatabaseServices().getQuizData(widget.quizId).then((val) {
-        questionsSnapshot = val;
-      });
-    });
-  }
-
   @override
   void initState() {
     databaseServices.getQuizData(widget.quizId).then((val) {
       questionsSnapshot = val;
-      _total = questionsSnapshot!.docChanges.length;
-      _correct = 0;
-      _incorrect = 0;
-      _notAttempted = questionsSnapshot!.docChanges.length;
-      setState(() {});
+      setState(() {
+        _total = questionsSnapshot!.docChanges.length;
+        _correct = 0;
+        _incorrect = 0;
+        _notAttempted = questionsSnapshot!.docChanges.length;
+      });
     });
     if (infoStream == null) {
       infoStream = Stream<List<int>>.periodic(Duration(milliseconds: 100), (x) {
@@ -145,80 +138,88 @@ class _PlayQuizState extends State<PlayQuiz> {
           )
         ],
       ),
-      body: RefreshIndicator(
-        onRefresh: getNewData,
-        child: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              children: [
-                InfoHeader(
-                  length: questionsSnapshot != null
-                      ? questionsSnapshot!.docChanges.length
-                      : 0,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                questionsSnapshot == null
-                    ? Container(
-                        margin: EdgeInsets.only(top: 300),
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      )
-                    : questionsSnapshot!.docChanges.length == 0
-                        ? Container(
-                            margin: EdgeInsets.only(top: 320, left: 6),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("No Question Added Till !"),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => AddQuestions(
-                                                quizId: widget.quizId)));
-                                  },
-                                  child: Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 26),
-                                    height: 50,
-                                    width:
-                                        MediaQuery.of(context).size.width / 2,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(30),
-                                      color: Colors.blue,
-                                    ),
-                                    child: Text(
-                                      "Add Quiz",
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 17),
-                                    ),
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: [
+              InfoHeader(
+                length: questionsSnapshot != null
+                    ? questionsSnapshot!.docChanges.length
+                    : 0,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              questionsSnapshot == null
+                  ? Container(
+                      margin: EdgeInsets.only(top: 300),
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : questionsSnapshot!.docChanges.length == 0
+                      ? Container(
+                          margin: EdgeInsets.only(top: 320, left: 6),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("No Question Added Till !"),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => AddQuestions(
+                                              quizId: widget.quizId)));
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 26),
+                                  height: 50,
+                                  width: MediaQuery.of(context).size.width / 2,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    color: Colors.blue,
+                                  ),
+                                  child: Text(
+                                    "Add Quiz",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 17),
                                   ),
                                 ),
-                              ],
-                            ),
-                          )
-                        : ListView.builder(
-                            physics: ClampingScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: questionsSnapshot!.docChanges.length,
-                            itemBuilder: (context, index) {
-                              return QuizPlayTile(
-                                questionModel: getQuestionModelFromDataSnapshot(
-                                    questionsSnapshot!.docChanges[index]),
-                                index: index,
+                              ),
+                            ],
+                          ),
+                        )
+                      : StreamBuilder(
+                          stream: DatabaseServices()
+                              .getQuizDataSnapshot(widget.quizId),
+                          builder:
+                              (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (snapshot.hasData) {
+                              return ListView.builder(
+                                physics: ClampingScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: snapshot.data!.docChanges.length,
+                                itemBuilder: (context, index) {
+                                  return QuizPlayTile(
+                                    questionModel:
+                                        getQuestionModelFromDataSnapshot(
+                                            snapshot.data!.docChanges[index]),
+                                    index: index,
+                                  );
+                                },
                               );
-                            },
-                          )
-              ],
-            ),
+                            } else {
+                              return Center(
+                                child: LinearProgressIndicator(),
+                              );
+                            }
+                          }),
+            ],
           ),
         ),
       ),

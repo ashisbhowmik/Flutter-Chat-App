@@ -70,7 +70,13 @@ class _QuizHomePageState extends State<QuizHomePage> {
         elevation: 0.39,
         systemOverlayStyle: SystemUiOverlayStyle.dark,
         iconTheme: IconThemeData(color: Colors.black),
-        title: appBar2(context),
+        title: appBar(context),
+        // leading: IconButton(
+        //   onPressed: (){
+        //     Navigator.of(context).pop();
+        //   },
+        //
+        //   icon: Icon((Icons.arrow_back_ios)),iconSize: 24,),
         actions: [
           Container(
             child: Padding(
